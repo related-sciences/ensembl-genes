@@ -1,5 +1,7 @@
 import logging
 import pathlib
+from dataclasses import dataclass
+from enum import Enum
 from functools import cached_property
 from typing import Dict, List, NamedTuple, Set, Tuple
 
@@ -381,17 +383,56 @@ class Ensembl_Gene_Queries:
         assert len(check_df) == 1
 
 
+class ExportFormat(str, Enum):
+    parquet = "parquet"
+    tsv = "tsv"
+    excel = "excel"
+    json = "json"
+
+
+@dataclass
+class DatasetExport:
+    name: str
+    query_fxn: str
+    export_formats: List[ExportFormat] = [ExportFormat.parquet, ExportFormat.tsv]
+
+
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
     artifact_id: str = "ensembl_genes_human"
-    exports: List[str] = [
-        "gene",
-        "alt_allele",
-        "old_to_newest",
-        "update",
-        "xref",
-        "xref_ncbigene",
-        "xref_go",
+    exports: List[DatasetExport] = [
+        DatasetExport(
+            name="genes",
+            query_fxn="gene_df",
+            export_formats=list(ExportFormat),
+        ),
+        DatasetExport(
+            name="alt_alleles",
+            query_fxn="alt_allele_df",
+        ),
+        DatasetExport(
+            name="old_to_newest",
+            query_fxn="old_to_newest_df",
+        ),
+        DatasetExport(
+            name="updates",
+            query_fxn="update_df",
+            export_formats=list(ExportFormat),
+        ),
+        DatasetExport(
+            name="xrefs",
+            query_fxn="xref_df",
+            export_formats=list(ExportFormat),
+        ),
+        DatasetExport(
+            name="xref_ncbigene",
+            query_fxn="xref_ncbigene_df",
+            export_formats=list(ExportFormat),
+        ),
+        DatasetExport(
+            name="xref_go",
+            query_fxn="xref_go_df",
+        ),
     ]
 
     def __init__(self, release: str):
@@ -403,18 +444,26 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
     def export(self) -> None:
         for export in self.exports:
-            logging.info(f"exporting {export} data")
+            logging.info(f"exporting {export.name} data")
             self.write_export(export)
 
-    def write_export(self, name: str) -> None:
-        df = getattr(self, f"{name}_df")
+    def write_export(self, export: DatasetExport) -> None:
+        df = getattr(self, export.query_fxn)
         assert isinstance(df, pd.DataFrame)
-        path = self.output_directory.joinpath(f"{name}.snappy.parquet")
-        df.to_parquet(path, compression="snappy", index=False)
-        path = self.output_directory.joinpath(f"{name}.tsv.gz")
-        df.to_csv(
-            path, index=False, sep="\t", compression={"method": "gzip", "mtime": 0}
-        )
+        if ExportFormat.parquet in export.export_formats:
+            path = self.output_directory.joinpath(f"{export.name}.snappy.parquet")
+            df.to_parquet(path, compression="snappy", index=False)
+        if ExportFormat.tsv in export.export_formats:
+            path = self.output_directory.joinpath(f"{export.name}.tsv.gz")
+            df.to_csv(
+                path, index=False, sep="\t", compression={"method": "gzip", "mtime": 0}
+            )
+        if ExportFormat.json in export.export_formats:
+            path = self.output_directory.joinpath(f"{export.name}.json.gz")
+            # TODO
+        if ExportFormat.excel in export.export_formats:
+            path = self.output_directory.joinpath(f"{export.name}.xlsx")
+            # TODO
 
 
 class Commands:
