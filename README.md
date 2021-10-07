@@ -18,6 +18,14 @@ Note that the Ensembl core schema consists of [many tables](https://uswest.ensem
 There is a chance we have made mistakes and will appreciate any feedback or contributions.
 Please use [GitHub Issues](https://github.com/related-sciences/ensembl-genes/issues) for contact.
 
+## Usage
+
+Each release received a corresponding output branch.
+For example, see the [`output-104`](https://github.com/related-sciences/ensembl-genes/tree/output-104) branch for datasets generated from Ensembl release 104.
+
+Maintainers can create releases for new Ensembl releases running the [build workflow](https://github.com/related-sciences/ensembl-genes/actions/workflows/build.yaml)
+(which is a `workflow_dispatch` GitHub Action).
+
 ## Development
 
 ```shell
