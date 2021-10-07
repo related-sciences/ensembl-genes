@@ -29,14 +29,10 @@ python_version = "3.9"
 
 # https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
 [[tool.mypy.overrides]]
-module = "fire.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "pandas.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "sqlalchemy.*"
+module = [
+    "fire.*",
+    "pandas.*",
+    "sqlalchemy.*",
+]
 ignore_missing_imports = true
 

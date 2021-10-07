@@ -12,6 +12,9 @@ poetry update
 # Build the build to output
 poetry run python ...
 
+# Run tests
+pytest
+
 # Set up the git pre-commit hooks.
 # `git commit` will now trigger automatic checks including linting.
 pre-commit install
