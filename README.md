@@ -14,6 +14,10 @@ Therefore, we combined several SQL queries guided by Biostars answers —
 for example to retrieve [symbols](https://www.biostars.org/p/14367/#480311), [alternative sequence allele groups](https://www.biostars.org/p/143956/#144112), and [chromosomes](https://www.biostars.org/p/106355/) —
 and from [Open Targets pipelines](https://github.com/opentargets/platform-input-support/blob/b5bf58457ae71a7e32d0dae58340ff5f9d30591d/scripts/ensembl/create_genes_dictionary.py#L46-L78) to extract simplified tabular datasets.
 
+Note that the Ensembl core schema consists of [many tables](https://uswest.ensembl.org/info/docs/api/core/core_schema.html).
+There is a chance we have made mistakes and will appreciate any feedback or contributions.
+Please use [GitHub Issues](https://github.com/related-sciences/ensembl-genes/issues) for contact.
+
 ## Development
 
 ```shell
@@ -23,8 +27,11 @@ poetry install --no-root
 # Update the lock file
 poetry update
 
-# Build the build to output (change 104 to desired release)
-poetry run python src/ensembl_genes.py export --release=104
+# Export datasets to output (change 104 to desired release)
+poetry run python src/ensembl_genes.py datasets --release=104
+
+# Export notebooks to output (change 104 to desired release)
+poetry run python src/ensembl_genes.py notebooks --release=104
 
 # Run tests
 pytest

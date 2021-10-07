@@ -419,13 +419,33 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
 class Commands:
     @staticmethod
-    def export(release: str) -> None:
+    def export_datasets(release: str) -> None:
         ensgc = Ensembl_Gene_Catalog_Writer(release=release)
         logging.info(
             f"exporting ensembl genes to {ensgc.output_directory}: version {ensgc.release}"
         )
         logging.info(f"connection_url: {ensgc.connection_url}")
         ensgc.export()
+
+    @staticmethod
+    def export_notebooks(release: str) -> None:
+        """Execute notebooks using papermill and save results in output directory."""
+        import papermill
+
+        ensgc = Ensembl_Gene_Catalog_Writer(release=release)
+
+        logging.info("Executing notebooks with papermill")
+        notebook = "ensembl_genes_eda.ipynb"
+        papermill.execute_notebook(
+            input_path=f"src/{notebook}",
+            output_path=ensgc.output_directory.joinpath(notebook),
+            parameters=dict(release=release),
+        )
+
+    @classmethod
+    def export_all(cls, release: str) -> None:
+        cls.export_datasets(release=release)
+        cls.export_notebooks(release=release)
 
 
 if __name__ == "__main__":
@@ -435,6 +455,8 @@ if __name__ == "__main__":
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
     commands = {
-        "export": Commands.export,
+        "datasets": Commands.export_datasets,
+        "notebooks": Commands.export_notebooks,
+        "all": Commands.export_all,
     }
     fire.Fire(commands)
