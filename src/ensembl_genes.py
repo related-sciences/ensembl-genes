@@ -411,8 +411,10 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         assert isinstance(df, pd.DataFrame)
         path = self.output_directory.joinpath(f"{name}.snappy.parquet")
         df.to_parquet(path, compression="snappy", index=False)
-        path = self.output_directory.joinpath(f"{name}.tsv")
-        df.to_csv(path, index=False, sep="\t")
+        path = self.output_directory.joinpath(f"{name}.tsv.gz")
+        df.to_csv(
+            path, index=False, sep="\t", compression={"method": "gzip", "mtime": 0}
+        )
 
 
 class Commands:
