@@ -6,8 +6,11 @@
 # Install the environment
 poetry install --no-root
 
+# Update the lock file
+poetry update
+
 # Build the build to output
-poetry run
+poetry run python ...
 
 # Set up the git pre-commit hooks.
 # `git commit` will now trigger automatic checks including linting.

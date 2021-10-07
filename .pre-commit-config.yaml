@@ -25,6 +25,7 @@ repos:
     rev: v0.910-1
     hooks:
       - id: mypy
-        args: ["--strict", "--show-error-codes"]
+        args: ["--strict", "--show-error-codes", "--pretty", "--show-error-context"]
         additional_dependencies:
           - pandas==1.3.3
+          - sqlalchemy==1.4.25
