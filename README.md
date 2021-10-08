@@ -23,6 +23,16 @@ Please use [GitHub Issues](https://github.com/related-sciences/ensembl-genes/iss
 Each release received a corresponding output branch.
 For example, see the [`output-104`](https://github.com/related-sciences/ensembl-genes/tree/output-104) branch for datasets generated from Ensembl release 104.
 
+If you'd like to download all files for a specific release,
+you can use a command like the following (replacing `104` with the desired release number):
+
+```shell
+# clone the relevant output branch to a local directory
+git clone --branch=output-104 --depth=1 https://github.com/related-sciences/ensembl-genes.git
+# optionally uninitialize git from the data directory
+cd ensembl-genes && rm -rf .git
+```
+
 Maintainers can create releases for new Ensembl releases running the [build workflow](https://github.com/related-sciences/ensembl-genes/actions/workflows/build.yaml)
 (which is a `workflow_dispatch` GitHub Action).
 
