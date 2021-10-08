@@ -248,7 +248,8 @@ class Ensembl_Gene_Queries:
     @cached_property
     def update_df(self) -> pd.DataFrame:
         """
-        The omni-updater dataset is designed to convert ensembl gene IDs from input data to the current, representative ensembl_gene_ids for this ensembl release. It assumes:
+        The omni-updater dataset is designed to convert ensembl gene IDs from input data to the current, representative ensembl_gene_ids for this ensembl release.
+        It assumes:
 
         - users want to update outdated genes with their replacements
         - users want a dataset of representative genes only, and want to convert alternative alleles to representative genes
@@ -395,6 +396,7 @@ class ExportFormat(str, Enum):
 class DatasetExport:
     name: str
     query_fxn: str
+    description: str
     export_formats: List[ExportFormat] = field(
         default_factory=lambda: [ExportFormat.parquet, ExportFormat.tsv]
     )
@@ -407,34 +409,64 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         DatasetExport(
             name="genes",
             query_fxn="gene_df",
+            description=(
+                "Primary table of ensembl genes with IDs, symbols, and genomic location information. "
+                "Most users will want to filter this dataset to representative genes only, "
+                "via the `is_representative_gene` column."
+            ),
             export_formats=list(ExportFormat),
         ),
         DatasetExport(
             name="alt_alleles",
             query_fxn="alt_allele_df",
+            description=(
+                "This is an intermediate table that groups genes if they are alternate alleles of eachother. "
+                "A representative gene is selected from each group."
+            ),
         ),
         DatasetExport(
             name="old_to_newest",
             query_fxn="old_to_newest_df",
+            description=(
+                "This table maps outdated gene symbols to their newest gene symbol, "
+                "traversing multiple levels of replacement if necessary. "
+                "When `is_current` is False, then the newest replacement is not a current gene."
+            ),
         ),
         DatasetExport(
             name="updates",
             query_fxn="update_df",
+            description=(
+                "This dataset updates ensembl genes to current, representative ensembl genes. "
+                "We refer to it as the 'omni-updater'. "
+                "When ingesting external datasets that use Ensembl gene IDs, we recommend joining with this table. "
+                "Current, representative genes map to themselves."
+            ),
             export_formats=list(ExportFormat),
         ),
         DatasetExport(
             name="xrefs",
             query_fxn="xref_df",
+            description=(
+                "This dataset contains cross-references (xrefs) from Ensembl genes to various external gene resources."
+            ),
             export_formats=list(ExportFormat),
         ),
         DatasetExport(
             name="xref_ncbigene",
             query_fxn="xref_ncbigene_df",
+            description=(
+                "This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes."
+            ),
             export_formats=list(ExportFormat),
         ),
         DatasetExport(
             name="xref_go",
             query_fxn="xref_go_df",
+            description=(
+                "This dataset contains cross-references (xrefs) from Ensembl genes to Gene Ontology terms, "
+                "as asserted by Gene Ontology annotations."
+            ),
         ),
     ]
     ipynb_exports = [
