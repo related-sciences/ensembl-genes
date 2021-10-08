@@ -1,5 +1,6 @@
 import logging
 import pathlib
+import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
@@ -436,6 +437,10 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             query_fxn="xref_go_df",
         ),
     ]
+    ipynb_exports = [
+        "ensembl_genes_output.ipynb",
+        "ensembl_genes_eda.ipynb",
+    ]
 
     def __init__(self, release: str):
         release = str(release)  # protect against fire
@@ -444,12 +449,12 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         directory.mkdir(exist_ok=True, parents=True)
         self.output_directory = directory
 
-    def export(self) -> None:
+    def export_datasets(self) -> None:
         for export in self.exports:
             logging.info(f"exporting {export.name} data")
-            self.write_export(export)
+            self.write_dataset(export)
 
-    def write_export(self, export: DatasetExport) -> None:
+    def write_dataset(self, export: DatasetExport) -> None:
         df = getattr(self, export.query_fxn)
         assert isinstance(df, pd.DataFrame)
         gz_compression = {"method": "gzip", "mtime": 0}
@@ -472,6 +477,32 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
                 engine="openpyxl",
             )
 
+    def export_notebooks(self) -> None:
+        for ipynb_export in self.ipynb_exports:
+            self.export_notebook(notebook=ipynb_export)
+        # export ensembl_genes_output.ipynb to README.md
+        output_ipynb = self.output_directory.joinpath("ensembl_genes_output.ipynb")
+        command = [
+            "jupyter",
+            "nbconvert",
+            output_ipynb.as_posix(),
+            "--to=markdown",
+            # outputs by default to the directory of each notebook.
+            "--output=README.md",
+        ]
+        subprocess.check_call(command)
+        output_ipynb.unlink()
+
+    def export_notebook(self, notebook: str) -> None:
+        import papermill
+
+        logging.info(f"Executing {notebook} with papermill")
+        papermill.execute_notebook(
+            input_path=f"src/{notebook}",
+            output_path=self.output_directory.joinpath(notebook),
+            parameters=dict(release=self.release),
+        )
+
 
 class Commands:
     @staticmethod
@@ -481,22 +512,15 @@ class Commands:
             f"exporting ensembl genes to {ensgc.output_directory}: version {ensgc.release}"
         )
         logging.info(f"connection_url: {ensgc.connection_url}")
-        ensgc.export()
+        ensgc.export_datasets()
 
     @staticmethod
     def export_notebooks(release: str) -> None:
         """Execute notebooks using papermill and save results in output directory."""
-        import papermill
-
-        ensgc = Ensembl_Gene_Catalog_Writer(release=release)
 
         logging.info("Executing notebooks with papermill")
-        notebook = "ensembl_genes_eda.ipynb"
-        papermill.execute_notebook(
-            input_path=f"src/{notebook}",
-            output_path=ensgc.output_directory.joinpath(notebook),
-            parameters=dict(release=release),
-        )
+        ensgc = Ensembl_Gene_Catalog_Writer(release=release)
+        ensgc.export_notebooks()
 
     @classmethod
     def export_all(cls, release: str) -> None:
