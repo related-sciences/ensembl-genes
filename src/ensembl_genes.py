@@ -489,6 +489,8 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             "--to=markdown",
             # outputs by default to the directory of each notebook.
             "--output=README.md",
+            # exclude input/code cells
+            "--no-input",
         ]
         subprocess.check_call(command)
         output_ipynb.unlink()
