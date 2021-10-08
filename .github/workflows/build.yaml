@@ -25,8 +25,16 @@ jobs:
     - name: Test with pytest
       run: poetry run pytest --color=yes
     - name: Extract tables
+      id: extract
       if: github.event_name == 'workflow_dispatch'
       run: poetry run python src/ensembl_genes.py all --release=${{ github.event.inputs.release }}
+    - name: Output artifact
+      # upload outputs to artifact only when the extraction fails
+      if: always() && steps.extract.outcome == 'failure'
+      uses: actions/upload-artifact@v2
+      with:
+        name: failed-output-${{ github.event.inputs.release }}
+        path: output/${{ github.event.inputs.release }}
     - name: Deploy
       if: github.event_name == 'workflow_dispatch'
       uses: peaceiris/actions-gh-pages@v3
