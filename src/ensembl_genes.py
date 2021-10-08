@@ -452,20 +452,25 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
     def write_export(self, export: DatasetExport) -> None:
         df = getattr(self, export.query_fxn)
         assert isinstance(df, pd.DataFrame)
+        gz_compression = {"method": "gzip", "mtime": 0}
         if ExportFormat.parquet in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.snappy.parquet")
             df.to_parquet(path, compression="snappy", index=False)
         if ExportFormat.tsv in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.tsv.gz")
-            df.to_csv(
-                path, index=False, sep="\t", compression={"method": "gzip", "mtime": 0}
-            )
+            df.to_csv(path, index=False, sep="\t", compression=gz_compression)
         if ExportFormat.json in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.json.gz")
-            # TODO
+            df.to_json(path, orient="records", compression=gz_compression, indent=2)
         if ExportFormat.excel in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.xlsx")
-            # TODO
+            df.to_excel(
+                path,
+                sheet_name=export.name,
+                freeze_panes=(1, 0),
+                float_format="%.4g",
+                engine="openpyxl",
+            )
 
 
 class Commands:
