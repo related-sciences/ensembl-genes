@@ -475,6 +475,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
                 freeze_panes=(1, 0),
                 float_format="%.4g",
                 engine="openpyxl",
+                index=False,
             )
 
     def export_notebooks(self) -> None:
