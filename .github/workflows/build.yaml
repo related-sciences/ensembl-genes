@@ -34,3 +34,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: output-${{ github.event.inputs.release }}
         publish_dir: output/${{ github.event.inputs.release }}
+        # https://github.com/peaceiris/actions-gh-pages/issues/660
+        disable_nojekyll: true
