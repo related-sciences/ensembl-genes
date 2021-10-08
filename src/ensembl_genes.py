@@ -1,6 +1,6 @@
 import logging
 import pathlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
 from typing import Dict, List, NamedTuple, Set, Tuple
@@ -394,7 +394,9 @@ class ExportFormat(str, Enum):
 class DatasetExport:
     name: str
     query_fxn: str
-    export_formats: List[ExportFormat] = [ExportFormat.parquet, ExportFormat.tsv]
+    export_formats: List[ExportFormat] = field(
+        default_factory=lambda: [ExportFormat.parquet, ExportFormat.tsv]
+    )
 
 
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
