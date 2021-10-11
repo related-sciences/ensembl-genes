@@ -3,12 +3,10 @@ import pathlib
 import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
-from functools import cached_property
-from typing import Dict, List, NamedTuple, Set, Tuple
+from functools import cached_property, lru_cache
+from typing import Dict, List, NamedTuple, Optional, Set, Tuple
 
-import fire
 import pandas as pd
-import sqlalchemy
 
 ensembl_human_gene_pattern = r"^ENSG[0-9]{11}$"
 """
@@ -58,6 +56,8 @@ class Ensembl_Gene_Queries:
         Ensembl public MySQL Servers information at
         https://uswest.ensembl.org/info/data/mysql.html
         """
+        import sqlalchemy
+
         url = sqlalchemy.engine.url.URL.create(
             drivername="mysql+mysqlconnector",
             username="anonymous",
@@ -539,9 +539,48 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         )
 
 
+@lru_cache
+def get_latest_ensembl_release() -> str:
+    """Return the latest Ensembl release as provided by bioversions."""
+    import requests
+    import yaml
+
+    url = (
+        "https://github.com/biopragmatics/bioversions/raw/main/docs/_data/versions.yml"
+    )
+    res = requests.get(url)
+    res_yaml = yaml.safe_load(res.text)
+    versions = {
+        entry["prefix"]: entry["releases"][-1]["version"]
+        for entry in res_yaml["database"]
+        if "prefix" in entry
+    }
+    ensembl_release = versions["ensembl"]
+    assert isinstance(ensembl_release, str)
+    return ensembl_release
+
+
+def check_ensembl_release(release: Optional[str]) -> str:
+    """
+    Check that ensembl release is properly formatted, like '104'.
+    If release is None, get latest release using bioversions.
+    https://github.com/related-sciences/ensembl-genes/issues/1
+    """
+    if release is None:
+        release = get_latest_ensembl_release()
+    try:
+        int(release)
+    except ValueError:
+        raise ValueError(
+            f"release should be convertible to an int, like '104'. Received {release!r}"
+        )
+    return release
+
+
 class Commands:
     @staticmethod
-    def export_datasets(release: str) -> None:
+    def export_datasets(release: Optional[str] = None) -> None:
+        release = check_ensembl_release(release)
         ensgc = Ensembl_Gene_Catalog_Writer(release=release)
         logging.info(
             f"exporting ensembl genes to {ensgc.output_directory}: version {ensgc.release}"
@@ -550,15 +589,16 @@ class Commands:
         ensgc.export_datasets()
 
     @staticmethod
-    def export_notebooks(release: str) -> None:
+    def export_notebooks(release: Optional[str] = None) -> None:
         """Execute notebooks using papermill and save results in output directory."""
-
+        release = check_ensembl_release(release)
         logging.info("Executing notebooks with papermill")
         ensgc = Ensembl_Gene_Catalog_Writer(release=release)
         ensgc.export_notebooks()
 
     @classmethod
-    def export_all(cls, release: str) -> None:
+    def export_all(cls, release: Optional[str] = None) -> None:
+        release = check_ensembl_release(release)
         cls.export_datasets(release=release)
         cls.export_notebooks(release=release)
 
@@ -567,11 +607,14 @@ if __name__ == "__main__":
     """
     Run like `poetry run python src/ensembl_genes.py export`
     """
+    import fire
+
     logging.basicConfig()
     logging.getLogger().setLevel(logging.INFO)
     commands = {
         "datasets": Commands.export_datasets,
         "notebooks": Commands.export_notebooks,
         "all": Commands.export_all,
+        "latest_release": get_latest_ensembl_release,
     }
     fire.Fire(commands)
