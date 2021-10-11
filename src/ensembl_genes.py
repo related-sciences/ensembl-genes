@@ -543,16 +543,12 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 def get_latest_ensembl_release() -> str:
     """Return the latest Ensembl release as provided by bioversions."""
     import requests
-    import yaml
 
-    url = (
-        "https://github.com/biopragmatics/bioversions/raw/main/docs/_data/versions.yml"
-    )
-    res = requests.get(url)
-    res_yaml = yaml.safe_load(res.text)
+    url = "https://github.com/biopragmatics/bioversions/raw/main/src/bioversions/resources/versions.json"
+    results = requests.get(url).json()
     versions = {
         entry["prefix"]: entry["releases"][-1]["version"]
-        for entry in res_yaml["database"]
+        for entry in results["database"]
         if "prefix" in entry
     }
     ensembl_release = versions["ensembl"]

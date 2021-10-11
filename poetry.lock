@@ -1237,7 +1237,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "63f59240f8bf25b89169e38043ae9194457b2ebc8538cc8fc37e45b6b96d3253"
+content-hash = "b4aebe56408020d0413b4bf0b9e306418386fe846b6da6a8a3e90ec73871e548"
 
 [metadata.files]
 ansiwrap = [
