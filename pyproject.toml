@@ -17,6 +17,7 @@ pandas = "^1.3.3"
 papermill = "^2.3.3"
 pre-commit = "^2.15.0"
 pytest = "^6.2.5"
+requests = "^2.26.0"
 sqlalchemy = "^1.4.25"
 tabulate = "^0.8.9"
 
@@ -38,6 +39,7 @@ module = [
     "fire.*",
     "pandas.*",
     "papermill.*",
+    "requests.*",
     "sqlalchemy.*",
 ]
 ignore_missing_imports = true

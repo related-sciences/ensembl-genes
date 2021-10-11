@@ -2,6 +2,7 @@ import pytest
 
 from ..ensembl_genes import Ensembl_Gene_Queries
 from ..ensembl_genes import GeneForMHC as Gene
+from ..ensembl_genes import check_ensembl_release, get_latest_ensembl_release
 
 
 @pytest.mark.parametrize(
@@ -23,3 +24,17 @@ from ..ensembl_genes import GeneForMHC as Gene
 )
 def test_get_mhc_category(gene: Gene, category: str) -> None:
     assert Ensembl_Gene_Queries.get_mhc_category(gene) == category
+
+
+def test_get_latest_ensembl_release() -> None:
+    release = get_latest_ensembl_release()
+    assert int(release) >= 104
+
+
+def test_check_ensembl_release() -> None:
+    assert check_ensembl_release("104") == "104"
+    with pytest.raises(
+        ValueError,
+        match="release should be convertible to an int, like '104'. Received 'v104'",
+    ):
+        check_ensembl_release("v104")
