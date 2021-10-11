@@ -1,7 +1,5 @@
-name: Build
+name: Export
 on:
-  push:
-  pull_request:
   workflow_dispatch:
     inputs:
       release:
@@ -9,24 +7,15 @@ on:
         required: true
         default: '104'
 jobs:
-  build:
+  export:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-    - name: Run pre-commit
-      uses: pre-commit/action@v2.0.3
-    - name: Install poetry
-      run: pip install poetry
-    - name: Install dependencies
-      run: poetry install
-    - name: Test with pytest
-      run: poetry run pytest --color=yes
+    - name: Setup dependencies
+      uses: ./.github/actions/setup
     - name: Extract tables
       id: extract
-      if: github.event_name == 'workflow_dispatch'
       run: poetry run python src/ensembl_genes.py all --release=${{ github.event.inputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
@@ -36,11 +25,11 @@ jobs:
         name: failed-output-${{ github.event.inputs.release }}
         path: output/${{ github.event.inputs.release }}
     - name: Deploy
-      if: github.event_name == 'workflow_dispatch'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: output-${{ github.event.inputs.release }}
         publish_dir: output/${{ github.event.inputs.release }}
+        # Won't actually enable jekyll because we're not using GitHub Pages.
         # https://github.com/peaceiris/actions-gh-pages/issues/660
-        disable_nojekyll: true
+        enable_jekyll: true
