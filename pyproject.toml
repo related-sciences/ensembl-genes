@@ -7,6 +7,7 @@ authors = ["Related Sciences Data Team"]
 # https://python-poetry.org/docs/versions/
 [tool.poetry.dependencies]
 python = "^3.9"
+bioversions = "^0.3.5"
 fastparquet = "^0.7.1"
 fire = "^0.4.0"
 mysql-connector-python = "^8.0.26"
