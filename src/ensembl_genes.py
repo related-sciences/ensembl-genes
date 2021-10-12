@@ -167,6 +167,17 @@ class Ensembl_Gene_Queries:
 
     @staticmethod
     def _alt_allele_get_representative(df: pd.DataFrame) -> "Tuple[str, str]":
+        """
+        For a subset of the alt_allele_df corresponding to a single `alt_allele_group_id`,
+        return a (ensembl_representative_gene_id, representative_gene_method) tuple,
+        where `ensembl_representative_gene_id` is the selected representative gene from this group
+        and `representative_gene_method` is the method by which it was selected.
+        The following methods are used in this order of precedence:
+
+        1. alt_allele_is_representative: the ensembl alt_allele table declares a single gene as IS_REPRESENTATIVE.
+        2. primary_assembly: a single gene is on the primary assembly.
+        3. first_added: the gene first added to the Ensembl database.
+        """
         representatives = list(
             df.loc[df.alt_allele_is_representative.astype("bool"), "ensembl_gene_id"]
         )
@@ -194,6 +205,10 @@ class Ensembl_Gene_Queries:
 
     @staticmethod
     def _alt_allele_add_representative(df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Apply to alt_allele_df grouped by `alt_allele_group_id` to add columns:
+        `ensembl_representative_gene_id`, `is_representative_gene`, `representative_gene_method`.
+        """
         representative, method = Ensembl_Gene_Queries._alt_allele_get_representative(df)
         df["ensembl_representative_gene_id"] = representative
         df["is_representative_gene"] = (
