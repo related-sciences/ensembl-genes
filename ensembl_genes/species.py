@@ -55,10 +55,28 @@ human = Species(
     xmhc_upper=33_410_226,
     # Chromosome names applied to genes on the primary assembly rather than alternative sequences.
     # Refs internal Related Sciences issue 241.
-    chromosomes=[*map(str, range(1, 23)), "X", "Y", "MT"],
+    chromosomes=[*map(str, range(1, 22 + 1)), "X", "Y", "MT"],
+)
+rat = Species(
+    name="rattus_norvegicus",
+    common_name="rat",
+    # Rnor_6.0
+    reference_genome="6",
+    # https://github.com/related-sciences/ensembl-genes/issues/4#issuecomment-941556912
+    ensembl_gene_pattern=r"^ENSRNOG[0-9]{11}$",
+    # FIXME: mhc coordinates
+    mhc_chromosome="6",
+    mhc_lower=28_510_120,
+    mhc_upper=33_480_577,
+    xmhc_lower=25_726_063,
+    xmhc_upper=33_410_226,
+    # Chromosome names applied to genes on the primary assembly rather than alternative sequences.
+    # Refs internal Related Sciences issue 241.
+    chromosomes=[*map(str, range(1, 20 + 1)), "X", "Y", "MT"],
 )
 
-all_species = [human]
+
+all_species = [human, rat]
 
 
 def get_species(species: Union[str, Species]) -> Species:
