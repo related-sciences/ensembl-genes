@@ -77,3 +77,31 @@ Please familiarize yourself with the [Ensembl data disclaimer](https://m.ensembl
 > Some of the data and software included in the distribution may be subject to third-party constraints. Users of the data and software are solely responsible for establishing the nature of and complying with any such restrictions.
 >
 > The European Molecular Biology Laboratory's European Bioinformatics Institute (EMBL-EBI) provides this data and software in good faith, but make no warranty, express or implied, nor assume any legal liability or responsibility for any purpose for which they are used.
+
+## Readings
+
+Here is a list of relevant works that help explain aspects of Ensembl genes:
+
+<!--
+```shell
+# command to generate references
+manubot cite --md [citation]
+```
+-->
+
+1. [**Accessing alternate sequences in human**](https://www.ensembl.info/2011/05/20/accessing-non-reference-sequences-in-human/)  
+Bronwen Aken  
+*Ensembl Blog* (2011-05-20)
+
+2. [**Patches and Haplotypes in the Human Genome**](https://youtu.be/sPE9j_Hw9HU)  
+Ensembl Training  
+*YouTube* (2012-01-21)
+
+3. [**Ensembl insights: Annotating readthrough transcription in Ensembl**](https://www.ensembl.info/2019/02/11/annotating-readthrough-transcription-in-ensembl/)  
+Erin Haskell  
+*Ensembl Blog* (2019-02-11)
+
+4. [**The Ensembl gene annotation system**](https://doi.org/f3sd3r)  
+Bronwen L Aken, Sarah Ayling, Daniel Barrell, Laura Clarke, Valery Curwen, Susan Fairley, Julio Fernandez Banet, Konstantinos Billis, Carlos García Girón, Thibaut Hourlier, … Stephen MJ Searle  
+*Database* (2016-06-23)  
+DOI: [10.1093/database/baw093](https://doi.org/10.1093/database/baw093) · PMID: [27337980](https://www.ncbi.nlm.nih.gov/pubmed/27337980) · PMCID: [PMC4919035](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4919035)
