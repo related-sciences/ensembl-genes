@@ -8,18 +8,7 @@ from typing import Dict, List, NamedTuple, Set, Tuple
 
 import pandas as pd
 
-ensembl_human_gene_pattern = r"^ENSG[0-9]{11}$"
-"""
-Regex pattern that valid human ensembl gene IDs should match.
-https://bioinformatics.stackexchange.com/a/15044/9750
-"""
-
-
-ensembl_reference_chromosomes = [*map(str, range(1, 23)), "X", "Y", "MT"]
-"""
-Chromosome names applied to genes on the primary assembly rather than alternative sequences.
-Refs internal Related Sciences issue 241.
-"""
+from .species import Species, human
 
 
 class GeneForMHC(NamedTuple):
@@ -40,15 +29,15 @@ class Ensembl_Gene_Queries:
     pandas.read_sql does not always preserve column types (e.g. converts bool columns to int).
     Convert columns listed to the specified type.
     """
-    species: str = "homo_sapiens"
+    species: Species = human
     """Which species to query (only homo_sapiens is currently supported)"""
-    reference_genome: str = "38"
-    """GRCh38"""
 
     def __init__(self, release: str):
         """Example release '104'."""
         self.release = release
-        self.database = f"{self.species}_core_{self.release}_{self.reference_genome}"
+        self.database = (
+            f"{self.species.name}_core_{self.release}_{self.species.reference_genome}"
+        )
 
     @property
     def connection_url(self) -> str:
@@ -81,21 +70,23 @@ class Ensembl_Gene_Queries:
                 df[column] = df[column].astype(dtype)
         return df
 
-    @staticmethod
-    def get_mhc_category(gene: GeneForMHC) -> str:
+    @classmethod
+    def get_mhc_category(cls, gene: GeneForMHC) -> str:
         """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
         chromosome: str = gene.chromosome
         start: int = gene.seq_region_start
         end: int = gene.seq_region_end
-        if chromosome != "6":
+        if chromosome != cls.species.mhc_chromosome:
             return "no"
         # Ensembl uses 1 based indexing, such that the interval should include
         # the end (closed) as per https://www.biostars.org/p/84686/.
         gene_interval = pd.Interval(left=start, right=end, closed="both")
-        # Refs boundary discussion internal Related Sciences issue 127.
-        # https://bioinformatics.stackexchange.com/a/14719/9750
-        mhc = pd.Interval(left=28_510_120, right=33_480_577, closed="both")
-        xmhc = pd.Interval(left=25_726_063, right=33_410_226, closed="both")
+        mhc = pd.Interval(
+            left=cls.species.mhc_lower, right=cls.species.mhc_upper, closed="both"
+        )
+        xmhc = pd.Interval(
+            left=cls.species.xmhc_lower, right=cls.species.xmhc_upper, closed="both"
+        )
         if gene_interval.overlaps(mhc):
             return "MHC"
         if gene_interval.overlaps(xmhc):
@@ -125,15 +116,15 @@ class Ensembl_Gene_Queries:
         self._check_gene_df(gene_repr_df)
         return gene_repr_df
 
-    @staticmethod
-    def _check_gene_df(gene_df: pd.DataFrame) -> None:
+    @classmethod
+    def _check_gene_df(cls, gene_df: pd.DataFrame) -> None:
         # ensure genes are distinct by their ensembl_gene_id
         gene_duplicate_df = gene_df[gene_df.ensembl_gene_id.duplicated(keep=False)]
         assert gene_duplicate_df.empty
         # check all ensembl IDs match the expected pattern
         # ensures LRG gene IDs are filtered (e.g. LRG_47)
         invalid_id_df = gene_df[
-            ~gene_df.ensembl_gene_id.str.fullmatch(ensembl_human_gene_pattern)
+            ~gene_df.ensembl_gene_id.str.fullmatch(cls.species.ensembl_gene_pattern)
         ]
         assert invalid_id_df.empty
         # ensure all genes have a symbol
@@ -144,7 +135,7 @@ class Ensembl_Gene_Queries:
         # Refs internal Related Sciences issue 606#issuecomment-929609041.
         bad_chromosome_df = gene_df.dropna(subset=["chromosome"])
         bad_chromosome_df = bad_chromosome_df[
-            ~bad_chromosome_df.chromosome.str.match(r"^([0-9]{1,2}|X|Y|MT)$")
+            ~bad_chromosome_df.chromosome.isin(cls.species.chromosomes)
         ]
         assert bad_chromosome_df.empty
 
@@ -419,7 +410,6 @@ class DatasetExport:
 
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
-    artifact_id: str = "ensembl_genes_human"
     exports: List[DatasetExport] = [
         DatasetExport(
             name="genes",
