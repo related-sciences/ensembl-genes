@@ -2,6 +2,9 @@ name: Test
 on:
   push:
   pull_request:
+  schedule:
+  # https://crontab.guru/#57_6_*_*_1
+  - cron: '57 6 * * 1'
 jobs:
   test:
     runs-on: ubuntu-latest

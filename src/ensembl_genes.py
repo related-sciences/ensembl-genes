@@ -556,7 +556,7 @@ def get_latest_ensembl_release() -> str:
     return ensembl_release
 
 
-def check_ensembl_release(release: str) -> str:
+def check_ensembl_release(release: str = "latest") -> str:
     """
     Check that ensembl release is properly formatted, like '104'.
     If release is 'latest', get latest release using bioversions.
@@ -614,6 +614,6 @@ if __name__ == "__main__":
         "datasets": Commands.export_datasets,
         "notebooks": Commands.export_notebooks,
         "all": Commands.export_all,
-        "latest_release": get_latest_ensembl_release,
+        "ensembl_release": check_ensembl_release,
     }
     fire.Fire(commands)

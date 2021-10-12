@@ -1,11 +1,18 @@
 name: Export
 on:
+  schedule:
+  # https://crontab.guru/#05_11_*_*_2
+  - cron: '05 11 * * 2'
   workflow_dispatch:
     inputs:
       release:
-        description: 'Ensembl release number'
+        description: 'Ensembl release number (e.g. 104 or latest)'
         required: true
-        default: '104'
+        default: 'latest'
+      overwrite:
+        description: 'Overwrite output on an existing branch (true or false).'
+        required: true
+        default: 'false'
 jobs:
   export:
     runs-on: ubuntu-latest
@@ -14,22 +21,49 @@ jobs:
       uses: actions/checkout@v2
     - name: Setup dependencies
       uses: ./.github/actions/setup
+    - name: Set parameters
+      id: params
+      shell: bash
+      run: |
+        ENSEMBL_RELEASE=${{ github.event.inputs.release || 'latest' }}
+        # update latest to release number
+        ENSEMBL_RELEASE=$(poetry run python src/ensembl_genes.py ensembl_release --release="$ENSEMBL_RELEASE")
+        echo "Setting parameter release=$ENSEMBL_RELEASE"
+        echo "::set-output name=release::$ENSEMBL_RELEASE"
+
+        OUTPUT_EXISTS="true"
+        git ls-remote --exit-code origin output-$ENSEMBL_RELEASE || OUTPUT_EXISTS="false"
+        echo "output-$ENSEMBL_RELEASE branch exists on origin: $OUTPUT_EXISTS"
+        echo "::set-output name=output_exists::$OUTPUT_EXISTS"
+
+        OVERWRITE=${{ github.event.inputs.overwrite || 'false' }}
+        echo "Setting parameter overwrite=$OVERWRITE"
+        echo "::set-output name=overwrite::$OVERWRITE"
+
+        EXPORT="false"
+        if [[ $OUTPUT_EXISTS = "false" || $OVERWRITE = "true" ]]; then
+          EXPORT="true"
+        fi
+        echo "Setting parameter export=$EXPORT"
+        echo "::set-output name=export::$EXPORT"
     - name: Extract tables
       id: extract
-      run: poetry run python src/ensembl_genes.py all --release=${{ github.event.inputs.release }}
+      if: steps.params.outputs.overwrite == 'true'
+      run: poetry run python src/ensembl_genes.py all --release=${{ steps.params.outputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'
       uses: actions/upload-artifact@v2
       with:
-        name: failed-output-${{ github.event.inputs.release }}
-        path: output/${{ github.event.inputs.release }}
+        name: failed-output-${{ steps.params.outputs.release }}
+        path: output/${{ steps.params.outputs.release }}
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
+      if: steps.params.outputs.overwrite == 'true'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: output-${{ github.event.inputs.release }}
-        publish_dir: output/${{ github.event.inputs.release }}
+        publish_branch: output-${{ steps.params.outputs.release }}
+        publish_dir: output/${{ steps.params.outputs.release }}
         # Won't actually enable jekyll because we're not using GitHub Pages.
         # https://github.com/peaceiris/actions-gh-pages/issues/660
         enable_jekyll: true
