@@ -4,7 +4,7 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property, lru_cache
-from typing import Dict, List, NamedTuple, Optional, Set, Tuple
+from typing import Dict, List, NamedTuple, Set, Tuple
 
 import pandas as pd
 
@@ -556,13 +556,14 @@ def get_latest_ensembl_release() -> str:
     return ensembl_release
 
 
-def check_ensembl_release(release: Optional[str]) -> str:
+def check_ensembl_release(release: str) -> str:
     """
     Check that ensembl release is properly formatted, like '104'.
-    If release is None, get latest release using bioversions.
+    If release is 'latest', get latest release using bioversions.
     https://github.com/related-sciences/ensembl-genes/issues/1
     """
-    if release is None:
+    release = str(release)  # protect against fire
+    if release == "latest":
         release = get_latest_ensembl_release()
     try:
         int(release)
@@ -575,7 +576,8 @@ def check_ensembl_release(release: Optional[str]) -> str:
 
 class Commands:
     @staticmethod
-    def export_datasets(release: Optional[str] = None) -> None:
+    def export_datasets(release: str = "latest") -> None:
+        """Export datasets to output directory."""
         release = check_ensembl_release(release)
         ensgc = Ensembl_Gene_Catalog_Writer(release=release)
         logging.info(
@@ -585,7 +587,7 @@ class Commands:
         ensgc.export_datasets()
 
     @staticmethod
-    def export_notebooks(release: Optional[str] = None) -> None:
+    def export_notebooks(release: str = "latest") -> None:
         """Execute notebooks using papermill and save results in output directory."""
         release = check_ensembl_release(release)
         logging.info("Executing notebooks with papermill")
@@ -593,7 +595,8 @@ class Commands:
         ensgc.export_notebooks()
 
     @classmethod
-    def export_all(cls, release: Optional[str] = None) -> None:
+    def export_all(cls, release: str = "latest") -> None:
+        """Export datasets and then notebooks."""
         release = check_ensembl_release(release)
         cls.export_datasets(release=release)
         cls.export_notebooks(release=release)

@@ -33,6 +33,7 @@ def test_get_latest_ensembl_release() -> None:
 
 def test_check_ensembl_release() -> None:
     assert check_ensembl_release("104") == "104"
+    assert int(check_ensembl_release("latest")) >= 104
     with pytest.raises(
         ValueError,
         match="release should be convertible to an int, like '104'. Received 'v104'",
