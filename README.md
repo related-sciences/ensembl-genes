@@ -33,8 +33,11 @@ git clone --branch=output-104 --depth=1 https://github.com/related-sciences/ense
 cd ensembl-genes && rm -rf .git
 ```
 
-Maintainers can create releases for new Ensembl releases running the [export workflow](https://github.com/related-sciences/ensembl-genes/actions/workflows/export.yaml)
+Maintainers can create exports for new Ensembl releases running the [export workflow](https://github.com/related-sciences/ensembl-genes/actions/workflows/export.yaml)
 (which is a `workflow_dispatch` GitHub Action).
+In addition, CI checks for a new Ensembl release every week,
+as reported by [Bioversions](https://biopragmatics.github.io/bioversions/),
+and runs an export if none already exists for that release.
 
 ## Development
 
