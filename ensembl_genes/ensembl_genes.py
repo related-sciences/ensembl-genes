@@ -4,13 +4,13 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import Dict, List, NamedTuple, Set, Tuple
+from typing import Dict, List, NamedTuple, Set, Tuple, Union
 
 import pandas as pd
 
 from ensembl_genes.releases import check_ensembl_release
 
-from .species import Species, human
+from .species import Species, get_species
 
 
 class GeneForMHC(NamedTuple):
@@ -31,12 +31,11 @@ class Ensembl_Gene_Queries:
     pandas.read_sql does not always preserve column types (e.g. converts bool columns to int).
     Convert columns listed to the specified type.
     """
-    species: Species = human
-    """Which species to query (only homo_sapiens is currently supported)"""
 
-    def __init__(self, release: str):
+    def __init__(self, species: Union[str, Species] = "human", release: str = "latest"):
         """Example release '104'."""
-        self.release = release
+        self.species = get_species(species)
+        self.release = check_ensembl_release(release)
         self.database = (
             f"{self.species.name}_core_{self.release}_{self.species.reference_genome}"
         )
@@ -72,22 +71,21 @@ class Ensembl_Gene_Queries:
                 df[column] = df[column].astype(dtype)
         return df
 
-    @classmethod
-    def get_mhc_category(cls, gene: GeneForMHC) -> str:
+    def get_mhc_category(self, gene: GeneForMHC) -> str:
         """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
         chromosome: str = gene.chromosome
         start: int = gene.seq_region_start
         end: int = gene.seq_region_end
-        if chromosome != cls.species.mhc_chromosome:
+        if chromosome != self.species.mhc_chromosome:
             return "no"
         # Ensembl uses 1 based indexing, such that the interval should include
         # the end (closed) as per https://www.biostars.org/p/84686/.
         gene_interval = pd.Interval(left=start, right=end, closed="both")
         mhc = pd.Interval(
-            left=cls.species.mhc_lower, right=cls.species.mhc_upper, closed="both"
+            left=self.species.mhc_lower, right=self.species.mhc_upper, closed="both"
         )
         xmhc = pd.Interval(
-            left=cls.species.xmhc_lower, right=cls.species.xmhc_upper, closed="both"
+            left=self.species.xmhc_lower, right=self.species.xmhc_upper, closed="both"
         )
         if gene_interval.overlaps(mhc):
             return "MHC"
@@ -481,9 +479,9 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         "ensembl_genes_eda.ipynb",
     ]
 
-    def __init__(self, release: str):
+    def __init__(self, species: Union[str, Species], release: str):
         release = str(release)  # protect against fire
-        super().__init__(release=release)
+        super().__init__(species=species, release=release)
         directory = pathlib.Path("output", self.release)
         directory.mkdir(exist_ok=True, parents=True)
         self.output_directory = directory
@@ -548,10 +546,9 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
 class Commands:
     @staticmethod
-    def export_datasets(release: str = "latest") -> None:
+    def export_datasets(species: str = "human", release: str = "latest") -> None:
         """Export datasets to output directory."""
-        release = check_ensembl_release(release)
-        ensgc = Ensembl_Gene_Catalog_Writer(release=release)
+        ensgc = Ensembl_Gene_Catalog_Writer(species=species, release=release)
         logging.info(
             f"exporting ensembl genes to {ensgc.output_directory}: version {ensgc.release}"
         )
@@ -559,19 +556,17 @@ class Commands:
         ensgc.export_datasets()
 
     @staticmethod
-    def export_notebooks(release: str = "latest") -> None:
+    def export_notebooks(species: str = "human", release: str = "latest") -> None:
         """Execute notebooks using papermill and save results in output directory."""
-        release = check_ensembl_release(release)
         logging.info("Executing notebooks with papermill")
-        ensgc = Ensembl_Gene_Catalog_Writer(release=release)
+        ensgc = Ensembl_Gene_Catalog_Writer(species=species, release=release)
         ensgc.export_notebooks()
 
     @classmethod
-    def export_all(cls, release: str = "latest") -> None:
+    def export_all(cls, species: str = "human", release: str = "latest") -> None:
         """Export datasets and then notebooks."""
-        release = check_ensembl_release(release)
-        cls.export_datasets(release=release)
-        cls.export_notebooks(release=release)
+        cls.export_datasets(species=species, release=release)
+        cls.export_notebooks(species=species, release=release)
 
     @classmethod
     def command(cls) -> None:

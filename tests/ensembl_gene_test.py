@@ -22,5 +22,5 @@ from ensembl_genes.ensembl_genes import GeneForMHC as Gene
     ],
 )
 def test_get_mhc_category(gene: Gene, category: str) -> None:
-    assert Ensembl_Gene_Queries.species.name == "homo_sapiens"
-    assert Ensembl_Gene_Queries.get_mhc_category(gene) == category
+    assert Ensembl_Gene_Queries().species.name == "homo_sapiens"
+    assert Ensembl_Gene_Queries().get_mhc_category(gene) == category
