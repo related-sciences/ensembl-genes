@@ -8,7 +8,6 @@ from typing import Dict, List, Set, Tuple, Union
 
 import pandas as pd
 
-from ensembl_genes.models import GeneForMHC
 from ensembl_genes.releases import check_ensembl_release
 
 from .species import Species, get_species
@@ -64,28 +63,6 @@ class Ensembl_Gene_Queries:
                 df[column] = df[column].astype(dtype)
         return df
 
-    def get_mhc_category(self, gene: GeneForMHC) -> str:
-        """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
-        chromosome: str = gene.chromosome
-        start: int = gene.seq_region_start
-        end: int = gene.seq_region_end
-        if chromosome != self.species.mhc_chromosome:
-            return "no"
-        # Ensembl uses 1 based indexing, such that the interval should include
-        # the end (closed) as per https://www.biostars.org/p/84686/.
-        gene_interval = pd.Interval(left=start, right=end, closed="both")
-        mhc = pd.Interval(
-            left=self.species.mhc_lower, right=self.species.mhc_upper, closed="both"
-        )
-        xmhc = pd.Interval(
-            left=self.species.xmhc_lower, right=self.species.xmhc_upper, closed="both"
-        )
-        if gene_interval.overlaps(mhc):
-            return "MHC"
-        if gene_interval.overlaps(xmhc):
-            return "xMHC"
-        return "no"
-
     @cached_property
     def gene_df(self) -> pd.DataFrame:
         gene_df = (
@@ -95,7 +72,9 @@ class Ensembl_Gene_Queries:
             .merge(self.xref_lrg_df, how="left")
         )
         # add MHC category
-        gene_df["mhc"] = [self.get_mhc_category(x) for x in gene_df.itertuples()]
+        gene_df["mhc"] = [
+            self.species.get_mhc_category(x) for x in gene_df.itertuples()
+        ]
         # add ensembl_representative_gene_id column
         gene_repr_df = gene_df.merge(
             self.alt_allele_df[["ensembl_gene_id", "ensembl_representative_gene_id"]],

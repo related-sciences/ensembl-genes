@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Union
 
+from ensembl_genes.models import GeneForMHC
+
 
 @dataclass
 class Species:
@@ -14,6 +16,26 @@ class Species:
     xmhc_lower: int
     xmhc_upper: int
     chromosomes: list[str]
+
+    def get_mhc_category(self, gene: GeneForMHC) -> str:
+        """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
+        import pandas as pd
+
+        chromosome: str = gene.chromosome
+        start: int = gene.seq_region_start
+        end: int = gene.seq_region_end
+        if chromosome != self.mhc_chromosome:
+            return "no"
+        # Ensembl uses 1 based indexing, such that the interval should include
+        # the end (closed) as per https://www.biostars.org/p/84686/.
+        gene_interval = pd.Interval(left=start, right=end, closed="both")
+        mhc = pd.Interval(left=self.mhc_lower, right=self.mhc_upper, closed="both")
+        xmhc = pd.Interval(left=self.xmhc_lower, right=self.xmhc_upper, closed="both")
+        if gene_interval.overlaps(mhc):
+            return "MHC"
+        if gene_interval.overlaps(xmhc):
+            return "xMHC"
+        return "no"
 
 
 human = Species(
