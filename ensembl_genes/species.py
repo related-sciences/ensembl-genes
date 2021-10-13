@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Union
 
 
 @dataclass
@@ -35,4 +36,14 @@ human = Species(
     chromosomes=[*map(str, range(1, 23)), "X", "Y", "MT"],
 )
 
-species = [human]
+all_species = [human]
+
+
+def get_species(species: Union[str, Species]) -> Species:
+    """Lookup species string from defined Species."""
+    if isinstance(species, Species):
+        return species
+    for match in all_species:
+        if species.lower() in {match.name, match.common_name}:
+            return match
+    raise ValueError(f"species {species!r} not found.")
