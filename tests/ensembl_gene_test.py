@@ -1,8 +1,11 @@
 import pytest
 
-from ..ensembl_genes import Ensembl_Gene_Queries
-from ..ensembl_genes import GeneForMHC as Gene
-from ..ensembl_genes import check_ensembl_release, get_latest_ensembl_release
+from ensembl_genes.ensembl_genes import Ensembl_Gene_Queries
+from ensembl_genes.ensembl_genes import GeneForMHC as Gene
+from ensembl_genes.ensembl_genes import (
+    check_ensembl_release,
+    get_latest_ensembl_release,
+)
 
 
 @pytest.mark.parametrize(

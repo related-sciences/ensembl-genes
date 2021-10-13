@@ -27,7 +27,7 @@ jobs:
       run: |
         ENSEMBL_RELEASE=${{ github.event.inputs.release || 'latest' }}
         # update latest to release number
-        ENSEMBL_RELEASE=$(poetry run python src/ensembl_genes.py ensembl_release --release="$ENSEMBL_RELEASE")
+        ENSEMBL_RELEASE=$(poetry run ensembl_genes ensembl_release --release="$ENSEMBL_RELEASE")
         echo "Setting parameter release=$ENSEMBL_RELEASE"
         echo "::set-output name=release::$ENSEMBL_RELEASE"
 
@@ -49,7 +49,7 @@ jobs:
     - name: Extract tables
       id: extract
       if: steps.params.outputs.overwrite == 'true'
-      run: poetry run python src/ensembl_genes.py all --release=${{ steps.params.outputs.release }}
+      run: poetry run ensembl_genes all --release=${{ steps.params.outputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'

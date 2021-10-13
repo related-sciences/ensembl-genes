@@ -548,7 +548,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
         logging.info(f"Executing {notebook} with papermill")
         papermill.execute_notebook(
-            input_path=f"src/{notebook}",
+            input_path=f"ensembl_genes/notebooks/{notebook}",
             output_path=self.output_directory.joinpath(notebook),
             parameters=dict(release=self.release),
         )
@@ -616,19 +616,19 @@ class Commands:
         cls.export_datasets(release=release)
         cls.export_notebooks(release=release)
 
+    @classmethod
+    def command(cls) -> None:
+        """
+        Run like `poetry run ensembl_genes`
+        """
+        import fire
 
-if __name__ == "__main__":
-    """
-    Run like `poetry run python src/ensembl_genes.py export`
-    """
-    import fire
-
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.INFO)
-    commands = {
-        "datasets": Commands.export_datasets,
-        "notebooks": Commands.export_notebooks,
-        "all": Commands.export_all,
-        "ensembl_release": check_ensembl_release,
-    }
-    fire.Fire(commands)
+        logging.basicConfig()
+        logging.getLogger().setLevel(logging.INFO)
+        commands = {
+            "datasets": cls.export_datasets,
+            "notebooks": cls.export_notebooks,
+            "all": cls.export_all,
+            "ensembl_release": check_ensembl_release,
+        }
+        fire.Fire(commands)
