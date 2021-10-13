@@ -4,21 +4,14 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import Dict, List, NamedTuple, Set, Tuple, Union
+from typing import Dict, List, Set, Tuple, Union
 
 import pandas as pd
 
+from ensembl_genes.models import GeneForMHC
 from ensembl_genes.releases import check_ensembl_release
 
 from .species import Species, get_species
-
-
-class GeneForMHC(NamedTuple):
-    """Argument type for get_mhc_category, to mimic pd.DataFrame.itertuples element."""
-
-    chromosome: str
-    seq_region_start: int
-    seq_region_end: int
 
 
 class Ensembl_Gene_Queries:

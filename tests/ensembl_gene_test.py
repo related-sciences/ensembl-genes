@@ -1,7 +1,7 @@
 import pytest
 
 from ensembl_genes.ensembl_genes import Ensembl_Gene_Queries
-from ensembl_genes.ensembl_genes import GeneForMHC as Gene
+from ensembl_genes.models import GeneForMHC as Gene
 
 
 @pytest.mark.parametrize(
