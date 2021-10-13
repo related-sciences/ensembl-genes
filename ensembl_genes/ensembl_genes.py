@@ -3,10 +3,12 @@ import pathlib
 import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
-from functools import cached_property, lru_cache
+from functools import cached_property
 from typing import Dict, List, NamedTuple, Set, Tuple
 
 import pandas as pd
+
+from ensembl_genes.releases import check_ensembl_release
 
 from .species import Species, human
 
@@ -542,41 +544,6 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             output_path=self.output_directory.joinpath(notebook),
             parameters=dict(release=self.release),
         )
-
-
-@lru_cache
-def get_latest_ensembl_release() -> str:
-    """Return the latest Ensembl release as provided by bioversions."""
-    import requests
-
-    url = "https://github.com/biopragmatics/bioversions/raw/main/src/bioversions/resources/versions.json"
-    results = requests.get(url).json()
-    versions = {
-        entry["prefix"]: entry["releases"][-1]["version"]
-        for entry in results["database"]
-        if "prefix" in entry
-    }
-    ensembl_release = versions["ensembl"]
-    assert isinstance(ensembl_release, str)
-    return ensembl_release
-
-
-def check_ensembl_release(release: str = "latest") -> str:
-    """
-    Check that ensembl release is properly formatted, like '104'.
-    If release is 'latest', get latest release using bioversions.
-    https://github.com/related-sciences/ensembl-genes/issues/1
-    """
-    release = str(release)  # protect against fire
-    if release == "latest":
-        release = get_latest_ensembl_release()
-    try:
-        int(release)
-    except ValueError:
-        raise ValueError(
-            f"release should be convertible to an int, like '104'. Received {release!r}"
-        )
-    return release
 
 
 class Commands:
