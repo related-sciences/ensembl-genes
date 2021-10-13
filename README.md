@@ -49,10 +49,10 @@ poetry install --no-root
 poetry update
 
 # Export datasets to output (change 104 to desired release)
-poetry run python src/ensembl_genes.py datasets --release=104
+poetry run ensembl_genes datasets --release=104
 
 # Export notebooks to output (change 104 to desired release)
-poetry run python src/ensembl_genes.py notebooks --release=104
+poetry run ensembl_genes notebooks --release=104
 
 # Run tests
 pytest

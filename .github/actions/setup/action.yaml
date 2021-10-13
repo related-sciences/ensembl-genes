@@ -10,4 +10,4 @@ runs:
       run: pip install poetry
     - name: Install dependencies
       shell: bash
-      run: poetry install
+      run: poetry install --ansi
