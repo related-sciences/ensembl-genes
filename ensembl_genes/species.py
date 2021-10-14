@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union
+from typing import Optional, Union
 
 from ensembl_genes.models import GeneForMHC
 
@@ -10,6 +10,7 @@ class Species:
     common_name: str
     reference_genome: str
     ensembl_gene_pattern: str
+    enable_mhc: bool
     mhc_chromosome: str
     mhc_lower: int
     mhc_upper: int
@@ -17,8 +18,10 @@ class Species:
     xmhc_upper: int
     chromosomes: list[str]
 
-    def get_mhc_category(self, gene: GeneForMHC) -> str:
+    def get_mhc_category(self, gene: GeneForMHC) -> Optional[str]:
         """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
+        if not self.enable_mhc:
+            return None
         import pandas as pd
 
         chromosome: str = gene.chromosome
@@ -48,6 +51,7 @@ human = Species(
     ensembl_gene_pattern=r"^ENSG[0-9]{11}$",
     # Refs MHC boundary discussion internal Related Sciences issue 127.
     # https://bioinformatics.stackexchange.com/a/14719/9750
+    enable_mhc=True,
     mhc_chromosome="6",
     mhc_lower=28_510_120,
     mhc_upper=33_480_577,
@@ -65,7 +69,9 @@ rat = Species(
     # https://github.com/related-sciences/ensembl-genes/issues/4#issuecomment-941556912
     ensembl_gene_pattern=r"^ENSRNOG[0-9]{11}$",
     # FIXME: mhc coordinates
-    mhc_chromosome="6",
+    # https://github.com/related-sciences/ensembl-genes/pull/6#discussion_r729259953
+    enable_mhc=False,
+    mhc_chromosome="20",
     mhc_lower=28_510_120,
     mhc_upper=33_480_577,
     xmhc_lower=25_726_063,
