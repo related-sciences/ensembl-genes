@@ -61,6 +61,21 @@ human = Species(
     # Refs internal Related Sciences issue 241.
     chromosomes=[*map(str, range(1, 22 + 1)), "X", "Y", "MT"],
 )
+mouse = Species(
+    name="mus_musculus",
+    common_name="mouse",
+    reference_genome="39",  # GRCm39
+    ensembl_gene_pattern=r"^ENSMUSG[0-9]{11}$",
+    # FIXME: mhc coordinates (H2 complex)
+    # https://doi.org/10.1002/9780470015902.a0000921.pub4
+    enable_mhc=False,
+    mhc_chromosome="17",
+    mhc_lower=28_510_120,
+    mhc_upper=33_480_577,
+    xmhc_lower=25_726_063,
+    xmhc_upper=33_410_226,
+    chromosomes=[*map(str, range(1, 19 + 1)), "X", "Y", "MT"],
+)
 rat = Species(
     name="rattus_norvegicus",
     common_name="rat",
@@ -76,13 +91,11 @@ rat = Species(
     mhc_upper=33_480_577,
     xmhc_lower=25_726_063,
     xmhc_upper=33_410_226,
-    # Chromosome names applied to genes on the primary assembly rather than alternative sequences.
-    # Refs internal Related Sciences issue 241.
     chromosomes=[*map(str, range(1, 20 + 1)), "X", "Y", "MT"],
 )
 
 
-all_species = [human, rat]
+all_species = [human, mouse, rat]
 
 
 def get_species(species: Union[str, Species]) -> Species:
