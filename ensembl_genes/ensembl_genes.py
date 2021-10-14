@@ -524,7 +524,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         papermill.execute_notebook(
             input_path=f"ensembl_genes/notebooks/{notebook}",
             output_path=self.output_directory.joinpath(notebook),
-            parameters=dict(release=self.release),
+            parameters=dict(species=self.species.common_name, release=self.release),
         )
 
 
