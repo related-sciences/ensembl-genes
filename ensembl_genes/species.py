@@ -8,7 +8,7 @@ from ensembl_genes.models import GeneForMHC
 class Species:
     name: str
     common_name: str
-    reference_genome: str
+    assembly: str
     ensembl_gene_pattern: str
     enable_mhc: bool
     mhc_chromosome: str
@@ -45,7 +45,7 @@ human = Species(
     name="homo_sapiens",
     common_name="human",
     # GRCh38
-    reference_genome="38",
+    assembly="38",
     # Regex pattern that valid human ensembl gene IDs should match.
     # https://bioinformatics.stackexchange.com/a/15044/9750
     ensembl_gene_pattern=r"^ENSG[0-9]{11}$",
@@ -64,7 +64,7 @@ human = Species(
 mouse = Species(
     name="mus_musculus",
     common_name="mouse",
-    reference_genome="39",  # GRCm39
+    assembly="39",  # GRCm39
     ensembl_gene_pattern=r"^ENSMUSG[0-9]{11}$",
     # FIXME: mhc coordinates (H2 complex)
     # https://doi.org/10.1002/9780470015902.a0000921.pub4
@@ -80,7 +80,7 @@ rat = Species(
     name="rattus_norvegicus",
     common_name="rat",
     # Rnor_6.0
-    reference_genome="6",
+    assembly="6",
     # https://github.com/related-sciences/ensembl-genes/issues/4#issuecomment-941556912
     ensembl_gene_pattern=r"^ENSRNOG[0-9]{11}$",
     # FIXME: mhc coordinates

@@ -29,7 +29,7 @@ class Ensembl_Gene_Queries:
         self.species = get_species(species)
         self.release = check_ensembl_release(release)
         self.database = (
-            f"{self.species.name}_core_{self.release}_{self.species.reference_genome}"
+            f"{self.species.name}_core_{self.release}_{self.species.assembly}"
         )
 
     @property
