@@ -552,6 +552,15 @@ class Commands:
         cls.export_datasets(species=species, release=release)
         cls.export_notebooks(species=species, release=release)
 
+    @staticmethod
+    def get_ensembl_database(species: str = "human", release: str = "latest") -> str:
+        """
+        Return ensembl core database string for a species & release.
+        See <http://ftp.ensembl.org/pub/current_mysql/> for a list of current ensembl databases.
+        """
+        ensgc = Ensembl_Gene_Queries(species=species, release=release)
+        return ensgc.database
+
     @classmethod
     def command(cls) -> None:
         """
@@ -566,5 +575,6 @@ class Commands:
             "notebooks": cls.export_notebooks,
             "all": cls.export_all,
             "ensembl_release": check_ensembl_release,
+            "ensembl_database": cls.get_ensembl_database,
         }
         fire.Fire(commands)
