@@ -1,7 +1,7 @@
 import pytest
 
 from ensembl_genes.models import GeneForMHC as Gene
-from ensembl_genes.species import get_species, human
+from ensembl_genes.species import get_species, human, rat
 
 
 def test_get_species() -> None:
@@ -31,3 +31,9 @@ def test_get_species() -> None:
 )
 def test_get_mhc_category_human(gene: Gene, category: str) -> None:
     assert human.get_mhc_category(gene) == category
+
+
+def test_get_mhc_category_rat() -> None:
+    gene = Gene("20", 0, 0)
+    assert rat.enable_mhc is False
+    assert rat.get_mhc_category(gene) is None
