@@ -10,7 +10,7 @@ import pandas as pd
 
 from ensembl_genes.releases import check_ensembl_release
 
-from .species import Species, get_species
+from .species import Species, get_species, human
 
 
 class Ensembl_Gene_Queries:
@@ -61,6 +61,9 @@ class Ensembl_Gene_Queries:
         for column, dtype in self._column_dtypes.items():
             if column in df:
                 df[column] = df[column].astype(dtype)
+        logging.info(
+            f"Ran {name!r} query returning {len(df):,} rows. Head:\n\n{df.head(4)}"
+        )
         return df
 
     @cached_property
@@ -88,15 +91,14 @@ class Ensembl_Gene_Queries:
         self._check_gene_df(gene_repr_df)
         return gene_repr_df
 
-    @classmethod
-    def _check_gene_df(cls, gene_df: pd.DataFrame) -> None:
+    def _check_gene_df(self, gene_df: pd.DataFrame) -> None:
         # ensure genes are distinct by their ensembl_gene_id
         gene_duplicate_df = gene_df[gene_df.ensembl_gene_id.duplicated(keep=False)]
         assert gene_duplicate_df.empty
         # check all ensembl IDs match the expected pattern
         # ensures LRG gene IDs are filtered (e.g. LRG_47)
         invalid_id_df = gene_df[
-            ~gene_df.ensembl_gene_id.str.fullmatch(cls.species.ensembl_gene_pattern)
+            ~gene_df.ensembl_gene_id.str.fullmatch(self.species.ensembl_gene_pattern)
         ]
         assert invalid_id_df.empty
         # ensure all genes have a symbol
@@ -107,16 +109,26 @@ class Ensembl_Gene_Queries:
         # Refs internal Related Sciences issue 606#issuecomment-929609041.
         bad_chromosome_df = gene_df.dropna(subset=["chromosome"])
         bad_chromosome_df = bad_chromosome_df[
-            ~bad_chromosome_df.chromosome.isin(cls.species.chromosomes)
+            ~bad_chromosome_df.chromosome.isin(self.species.chromosomes)
         ]
         assert bad_chromosome_df.empty
 
     @cached_property
     def alt_allele_df(self) -> pd.DataFrame:
+        alt_allele_df = self.run_query("gene_alt_alleles")
+        expected_cols = [
+            *alt_allele_df.columns,
+            "ensembl_representative_gene_id",
+            "is_representative_gene",
+            "representative_gene_method",
+        ]
         alt_allele_df = (
-            self.run_query("gene_alt_alleles")
-            .groupby("alt_allele_group_id")
-            .apply(self._alt_allele_add_representative)
+            alt_allele_df.groupby("alt_allele_group_id").apply(
+                self._alt_allele_add_representative
+            )
+            # Force expected output columns, since groupby-apply does not add columns
+            # from _alt_allele_add_representative when alt_allele_df is empty.
+            .reindex(columns=expected_cols)
             # ensembl_gene_id can be duplicated due to multiple alt_allele_attrib values
             .drop_duplicates("ensembl_gene_id", keep="first")
         )
@@ -348,19 +360,19 @@ class Ensembl_Gene_Queries:
         self._check_xref_go_df(xref_go_df)
         return xref_go_df
 
-    @staticmethod
-    def _check_xref_go_df(xref_go_df: pd.DataFrame) -> None:
+    def _check_xref_go_df(self, xref_go_df: pd.DataFrame) -> None:
         # check distinct on ensembl_gene_id-go_id pair
         dup_df = xref_go_df[
             xref_go_df.duplicated(subset=["ensembl_gene_id", "go_id"], keep=False)
         ]
         assert dup_df.empty
-        # spot check a single GO annotation for TYK2 and protein tyrosine kinase activity
-        # Refs internal Related Sciences pull request 322#issuecomment-756789203.
-        check_df = xref_go_df.query(
-            "ensembl_gene_id=='ENSG00000105397' and go_id=='GO:0004713'"
-        )
-        assert len(check_df) == 1
+        if self.species == human:
+            # spot check a single GO annotation for TYK2 and protein tyrosine kinase activity
+            # Refs internal Related Sciences pull request 322#issuecomment-756789203.
+            check_df = xref_go_df.query(
+                "ensembl_gene_id=='ENSG00000105397' and go_id=='GO:0004713'"
+            )
+            assert len(check_df) == 1
 
 
 class ExportFormat(str, Enum):
