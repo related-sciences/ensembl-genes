@@ -16,6 +16,12 @@ on:
 jobs:
   export:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        species:
+        - human
+        - mouse
+        - rat
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -30,7 +36,7 @@ jobs:
         echo "Setting parameter release=$ENSEMBL_RELEASE"
         echo "::set-output name=release::$ENSEMBL_RELEASE"
 
-        ENSEMBL_DATABASE=$(poetry run ensembl_genes ensembl_database --release="$ENSEMBL_RELEASE")
+        ENSEMBL_DATABASE=$(poetry run ensembl_genes ensembl_database --species="${{ matrix.species }}" --release="$ENSEMBL_RELEASE")
         echo "Setting parameter database=$ENSEMBL_DATABASE"
         echo "::set-output name=database::$ENSEMBL_DATABASE"
         # output_path doubles as a hierarchical branch name
@@ -56,7 +62,7 @@ jobs:
     - name: Extract tables
       id: extract
       if: steps.params.outputs.export == 'true'
-      run: poetry run ensembl_genes all --release=${{ steps.params.outputs.release }}
+      run: poetry run ensembl_genes all --species="${{ matrix.species }}" --release=${{ steps.params.outputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'
