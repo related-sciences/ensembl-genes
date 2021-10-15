@@ -10,7 +10,7 @@ authors = ["Related Sciences Data Team"]
 readme = "README.md"
 repository = "https://github.com/related-sciences/ensembl-genes"
 license = "Apache-2.0"
-include = ["ensembl_genes/queries/*.sql"]
+include = ["ensembl_genes/queries/*.sql", "ensembl_genes/notebooks/*.ipynb"]
 
 [tool.poetry.scripts]
 ensembl_genes = "ensembl_genes.ensembl_genes:Commands.command"

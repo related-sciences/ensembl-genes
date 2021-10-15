@@ -1,7 +1,7 @@
-# Extract the human ensembl gene catalog to simple tables
+# Extract the Ensembl gene catalog to simple tables
 
-This repository extracts a catalog of human genes from the Ensembl database.
-It is ideal for situations where you want to represent human genes via stable Ensembl identifiers.
+This repository extracts a catalog of genes from the Ensembl database for multiple species including human, rat, and mouse.
+It is ideal for situations where you want to represent genes via stable Ensembl identifiers.
 Data is extracted by a series of SQL queries as well as additional transformations in Python using Pandas.
 Tables are exported to output branches based on the corresponding Ensembl version in TSV and Parquet format.
 
@@ -9,7 +9,8 @@ Tables are exported to output branches based on the corresponding Ensembl versio
 
 NCBI publishes the `Homo_sapiens.gene_info.gz` dataset of human genes with one row per gene.
 It includes useful metadata like the gene symbol, synonyms, and chromosome.
-However, we weren't able to find a comparable dataset for Ensembl genes (please [let us know](https://github.com/related-sciences/ensembl-genes) if this exists).
+However, we weren't able to find a comparable dataset for Ensembl genes
+(please [let us know](https://github.com/related-sciences/ensembl-genes) if this exists).
 Therefore, we combined several SQL queries guided by Biostars answers —
 for example to retrieve [symbols](https://www.biostars.org/p/14367/#480311), [alternative sequence allele groups](https://www.biostars.org/p/143956/#144112), and [chromosomes](https://www.biostars.org/p/106355/) —
 and from [Open Targets pipelines](https://github.com/opentargets/platform-input-support/blob/b5bf58457ae71a7e32d0dae58340ff5f9d30591d/scripts/ensembl/create_genes_dictionary.py#L46-L78) to extract simplified tabular datasets.
@@ -20,11 +21,14 @@ Please use [GitHub Issues](https://github.com/related-sciences/ensembl-genes/iss
 
 ## Usage
 
-Each release received a corresponding output branch.
-For example, see the [`output/homo_sapiens_core_104_38`](https://github.com/related-sciences/ensembl-genes/tree/output/homo_sapiens_core_104_38) branch for datasets generated from Ensembl release 104.
+Ensembl stores gene information in databases where each database corresponds to specific combination of species, release, and genome assembly.
+Each supported core database receives a corresponding output branch in this repository.
+For example, see the [`output/homo_sapiens_core_104_38`](https://github.com/related-sciences/ensembl-genes/tree/output/homo_sapiens_core_104_38) branch for datasets generated from Ensembl release 104 of the human genome using the GRCh38 assembly.
 
-If you'd like to download all files for a specific release,
-you can use a command like the following (replacing `104` with the desired release number):
+If you'd like to download all files for a specific gene catalog,
+you can use a command like the following
+(replacing `homo_sapiens_core_104_38` with the desired database,
+see all [current databases here](http://ftp.ensembl.org/pub/current_mysql/ "Ensembl FTP site for current MySQL databases")):
 
 ```shell
 # clone the relevant output branch to a local directory
@@ -37,7 +41,7 @@ Maintainers can create exports for new Ensembl releases running the [export work
 (which is a `workflow_dispatch` GitHub Action).
 In addition, CI checks for a new Ensembl release every week,
 as reported by [Bioversions](https://biopragmatics.github.io/bioversions/),
-and runs an export if none already exists for that release.
+and runs an export if none already exists for that each species-specific database.
 
 ## Development
 
