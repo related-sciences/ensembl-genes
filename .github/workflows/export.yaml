@@ -26,14 +26,21 @@ jobs:
       shell: bash
       run: |
         ENSEMBL_RELEASE=${{ github.event.inputs.release || 'latest' }}
-        # update latest to release number
         ENSEMBL_RELEASE=$(poetry run ensembl_genes ensembl_release --release="$ENSEMBL_RELEASE")
         echo "Setting parameter release=$ENSEMBL_RELEASE"
         echo "::set-output name=release::$ENSEMBL_RELEASE"
 
+        ENSEMBL_DATABASE=$(poetry run ensembl_genes ensembl_database --release="$ENSEMBL_RELEASE")
+        echo "Setting parameter database=$ENSEMBL_DATABASE"
+        echo "::set-output name=database::$ENSEMBL_DATABASE"
+        # output_path doubles as a hierarchical branch name
+        OUTPUT_PATH="output/${ENSEMBL_DATABASE}"
+        echo "Setting parameter output_path=$OUTPUT_PATH"
+        echo "::set-output name=output_path::$OUTPUT_PATH"
+
         OUTPUT_EXISTS="true"
-        git ls-remote --exit-code origin output-$ENSEMBL_RELEASE || OUTPUT_EXISTS="false"
-        echo "output-$ENSEMBL_RELEASE branch exists on origin: $OUTPUT_EXISTS"
+        git ls-remote --exit-code origin $OUTPUT_PATH || OUTPUT_EXISTS="false"
+        echo "$OUTPUT_PATH branch exists on origin: $OUTPUT_EXISTS"
         echo "::set-output name=output_exists::$OUTPUT_EXISTS"
 
         OVERWRITE=${{ github.event.inputs.overwrite || 'false' }}
@@ -48,22 +55,22 @@ jobs:
         echo "::set-output name=export::$EXPORT"
     - name: Extract tables
       id: extract
-      if: steps.params.outputs.overwrite == 'true'
+      if: steps.params.outputs.export == 'true'
       run: poetry run ensembl_genes all --release=${{ steps.params.outputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'
       uses: actions/upload-artifact@v2
       with:
-        name: failed-output-${{ steps.params.outputs.release }}
-        path: output/${{ steps.params.outputs.release }}
+        name: failed_${{ steps.params.outputs.output_path }}
+        path: ${{ steps.params.outputs.output_path }}
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
-      if: steps.params.outputs.overwrite == 'true'
+      if: steps.params.outputs.export == 'true'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: output-${{ steps.params.outputs.release }}
-        publish_dir: output/${{ steps.params.outputs.release }}
+        publish_branch: ${{ steps.params.outputs.output_path }}
+        publish_dir: ${{ steps.params.outputs.output_path }}
         # Won't actually enable jekyll because we're not using GitHub Pages.
         # https://github.com/peaceiris/actions-gh-pages/issues/660
         enable_jekyll: true

@@ -466,7 +466,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
     def __init__(self, species: Union[str, Species], release: str):
         release = str(release)  # protect against fire
         super().__init__(species=species, release=release)
-        directory = pathlib.Path("output", self.release)
+        directory = pathlib.Path("output", self.database)
         directory.mkdir(exist_ok=True, parents=True)
         self.output_directory = directory
 

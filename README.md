@@ -21,14 +21,14 @@ Please use [GitHub Issues](https://github.com/related-sciences/ensembl-genes/iss
 ## Usage
 
 Each release received a corresponding output branch.
-For example, see the [`output-104`](https://github.com/related-sciences/ensembl-genes/tree/output-104) branch for datasets generated from Ensembl release 104.
+For example, see the [`output/homo_sapiens_core_104_38`](https://github.com/related-sciences/ensembl-genes/tree/output/homo_sapiens_core_104_38) branch for datasets generated from Ensembl release 104.
 
 If you'd like to download all files for a specific release,
 you can use a command like the following (replacing `104` with the desired release number):
 
 ```shell
 # clone the relevant output branch to a local directory
-git clone --branch=output-104 --depth=1 https://github.com/related-sciences/ensembl-genes.git
+git clone --branch=output/homo_sapiens_core_104_38 --depth=1 https://github.com/related-sciences/ensembl-genes.git
 # optionally uninitialize git from the data directory
 cd ensembl-genes && rm -rf .git
 ```
@@ -49,10 +49,10 @@ poetry install --no-root
 poetry update
 
 # Export datasets to output (change 104 to desired release)
-poetry run ensembl_genes datasets --release=104
+poetry run ensembl_genes datasets --species=human --release=104
 
 # Export notebooks to output (change 104 to desired release)
-poetry run ensembl_genes notebooks --release=104
+poetry run ensembl_genes notebooks --species=human --release=104
 
 # Run tests
 pytest
