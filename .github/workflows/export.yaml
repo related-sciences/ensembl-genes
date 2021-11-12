@@ -10,9 +10,9 @@ on:
         required: true
         default: 'latest'
       overwrite:
-        description: 'Overwrite output on an existing branch (true or false).'
-        required: true
-        default: 'false'
+        type: boolean
+        description: 'Overwrite output on an existing branch.'
+        default: false
 jobs:
   export:
     runs-on: ubuntu-latest
