@@ -4,7 +4,7 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import Dict, List, Set, Tuple, Union
+from typing import Tuple, Union
 
 import pandas as pd
 
@@ -15,7 +15,7 @@ from .species import Species, get_species, human
 
 class Ensembl_Gene_Queries:
 
-    _column_dtypes: Dict[str, str] = {
+    _column_dtypes: dict[str, str] = {
         "alt_allele_is_representative": "bool",
         "primary_assembly": "bool",
     }
@@ -200,7 +200,7 @@ class Ensembl_Gene_Queries:
         return self.run_query("gene_events")
 
     @cached_property
-    def old_to_news(self) -> Dict[str, str]:
+    def old_to_news(self) -> dict[str, str]:
         old_to_news = {}
         groups = self.old_to_new_df.groupby("old_ensembl_gene_id").new_ensembl_gene_id
         for old, news in groups:
@@ -209,7 +209,7 @@ class Ensembl_Gene_Queries:
             old_to_news[old] = news
         return old_to_news
 
-    def _update_ensembl_gene(self, old_id: str) -> Set[str]:
+    def _update_ensembl_gene(self, old_id: str) -> set[str]:
         """
         Recursive function to return newest identifiers for an old identifier.
         A newest identifier is not necessarily current, but does have no replacement in gene_history.
@@ -387,14 +387,14 @@ class DatasetExport:
     name: str
     query_fxn: str
     description: str
-    export_formats: List[ExportFormat] = field(
+    export_formats: list[ExportFormat] = field(
         default_factory=lambda: [ExportFormat.parquet, ExportFormat.tsv]
     )
 
 
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
 
-    exports: List[DatasetExport] = [
+    exports: list[DatasetExport] = [
         DatasetExport(
             name="genes",
             query_fxn="gene_df",
