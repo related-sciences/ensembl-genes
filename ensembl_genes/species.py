@@ -79,8 +79,8 @@ mouse = Species(
 rat = Species(
     name="rattus_norvegicus",
     common_name="rat",
-    # Rnor_6.0
-    assembly="6",
+    # mRatBN7.2
+    assembly="72",
     # https://github.com/related-sciences/ensembl-genes/issues/4#issuecomment-941556912
     ensembl_gene_pattern=r"^ENSRNOG[0-9]{11}$",
     # FIXME: mhc coordinates
