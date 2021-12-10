@@ -7,7 +7,7 @@ SELECT
   -- as per https://www.ensembl.info/2021/03/15/retirement-of-clone-based-gene-names/
   COALESCE(xref.display_label, gene.stable_id) AS gene_symbol,
   external_db.db_name AS gene_symbol_source_db,
-  xref.dbprimary_acc AS gene_symbol_source,
+  xref.dbprimary_acc AS gene_symbol_source_id,
   gene.biotype AS gene_biotype,
   gene.description AS gene_description,
   gene.source AS ensembl_source,

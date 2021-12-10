@@ -1,5 +1,6 @@
 import logging
 import pathlib
+import re
 import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
@@ -15,6 +16,13 @@ from .species import Species, get_species, human
 
 class Ensembl_Gene_Queries:
 
+    description_pattern = re.compile(
+        r"^(?P<gene_description>.+?)(?P<_desc_src> \[Source:(?P<gene_description_source_db>.+);Acc:(?P<gene_description_source_id>.+)\])?$"
+    )
+    """
+    Regex to separate source information from the gene description text.
+    https://regex101.com/r/wbW1Qc/1
+    """
     _column_dtypes: dict[str, str] = {
         "alt_allele_is_representative": "bool",
         "primary_assembly": "bool",
@@ -78,6 +86,14 @@ class Ensembl_Gene_Queries:
         gene_df["mhc"] = [
             self.species.get_mhc_category(x) for x in gene_df.itertuples()
         ]
+        # refine gene description columns
+        # https://github.com/related-sciences/ensembl-genes/issues/11
+        desc_df = (
+            gene_df.pop("gene_description")
+            .str.extract(self.description_pattern)
+            .drop(columns=["_desc_src"])
+        )
+        gene_df = gene_df.join(desc_df)
         # add ensembl_representative_gene_id column
         gene_repr_df = gene_df.merge(
             self.alt_allele_df[["ensembl_gene_id", "ensembl_representative_gene_id"]],
