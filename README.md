@@ -7,10 +7,10 @@
 - database: `homo_sapiens_core_105_38`
 - release: 105
 - assembly: 38
-- export date: 2021-12-10T18:21:51.122130
-- source commit: `a04d1eefa2ac16edfc7cc869447399c6351153f1
+- export date: 2022-01-25T02:57:03.762544
+- source commit: `3221e00f5d1514ed90bd814f869c0b99bb4860dc
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1564648697>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1743336965>
 
 
 
@@ -103,18 +103,18 @@ This dataset updates ensembl genes to current, representative ensembl genes. We 
 
 This dataset contains cross-references (xrefs) from Ensembl genes to various external gene resources.
 
-| ensembl_gene_id   | xref_source   | xref_accession   | xref_label                      | xref_description                                                     | xref_info_type   | xref_linkage_annotation   |
-|:------------------|:--------------|:-----------------|:--------------------------------|:---------------------------------------------------------------------|:-----------------|:--------------------------|
-| ENSG00000000003   | ArrayExpress  | ENSG00000000003  | ENSG00000000003                 | <NA>                                                                 | DIRECT           |                           |
-| ENSG00000000003   | EntrezGene    | 7105             | TSPAN6                          | tetraspanin 6                                                        | DEPENDENT        |                           |
-| ENSG00000000003   | HGNC          | HGNC:11858       | TSPAN6                          | tetraspanin 6                                                        | DIRECT           |                           |
-| ENSG00000000003   | MIM_GENE      | 300191           | TETRASPANIN 6; TSPAN6 [*300191] | TETRASPANIN 6; TSPAN6;;TRANSMEMBRANE 4 SUPERFAMILY, MEMBER 6; TM4SF6 | DEPENDENT        |                           |
-| ENSG00000000003   | Uniprot_gn    | A0A087WYV6       | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           |
-| ENSG00000000003   | Uniprot_gn    | A0A087WZU5       | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           |
-| ENSG00000000003   | Uniprot_gn    | O43657           | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           |
-| ENSG00000000003   | WikiGene      | 7105             | TSPAN6                          | tetraspanin 6                                                        | DEPENDENT        |                           |
-| ENSG00000000005   | ArrayExpress  | ENSG00000000005  | ENSG00000000005                 | <NA>                                                                 | DIRECT           |                           |
-| ENSG00000000005   | EntrezGene    | 64102            | TNMD                            | tenomodulin                                                          | DEPENDENT        |                           |
+| ensembl_representative_gene_id   | ensembl_gene_id   | xref_source   | xref_accession   | xref_label                      | xref_description                                                     | xref_info_type   | xref_linkage_annotation   | xref_curie                   |
+|:---------------------------------|:------------------|:--------------|:-----------------|:--------------------------------|:---------------------------------------------------------------------|:-----------------|:--------------------------|:-----------------------------|
+| ENSG00000000003                  | ENSG00000000003   | ArrayExpress  | ENSG00000000003  | ENSG00000000003                 | <NA>                                                                 | DIRECT           |                           | arrayexpress:ENSG00000000003 |
+| ENSG00000000003                  | ENSG00000000003   | EntrezGene    | 7105             | TSPAN6                          | tetraspanin 6                                                        | DEPENDENT        |                           | ncbigene:7105                |
+| ENSG00000000003                  | ENSG00000000003   | HGNC          | HGNC:11858       | TSPAN6                          | tetraspanin 6                                                        | DIRECT           |                           | hgnc:11858                   |
+| ENSG00000000003                  | ENSG00000000003   | MIM_GENE      | 300191           | TETRASPANIN 6; TSPAN6 [*300191] | TETRASPANIN 6; TSPAN6;;TRANSMEMBRANE 4 SUPERFAMILY, MEMBER 6; TM4SF6 | DEPENDENT        |                           | <NA>                         |
+| ENSG00000000003                  | ENSG00000000003   | Uniprot_gn    | A0A087WYV6       | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           | <NA>                         |
+| ENSG00000000003                  | ENSG00000000003   | Uniprot_gn    | A0A087WZU5       | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           | <NA>                         |
+| ENSG00000000003                  | ENSG00000000003   | Uniprot_gn    | O43657           | TSPAN6                          | <NA>                                                                 | DEPENDENT        |                           | <NA>                         |
+| ENSG00000000003                  | ENSG00000000003   | WikiGene      | 7105             | TSPAN6                          | tetraspanin 6                                                        | DEPENDENT        |                           | <NA>                         |
+| ENSG00000000005                  | ENSG00000000005   | ArrayExpress  | ENSG00000000005  | ENSG00000000005                 | <NA>                                                                 | DIRECT           |                           | arrayexpress:ENSG00000000005 |
+| ENSG00000000005                  | ENSG00000000005   | EntrezGene    | 64102            | TNMD                            | tenomodulin                                                          | DEPENDENT        |                           | ncbigene:64102               |
 
 
 
