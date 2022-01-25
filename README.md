@@ -7,10 +7,10 @@
 - database: `rattus_norvegicus_core_105_72`
 - release: 105
 - assembly: 72
-- export date: 2021-12-10T18:18:46.195823
-- source commit: `a04d1eefa2ac16edfc7cc869447399c6351153f1
+- export date: 2022-01-25T02:52:09.791239
+- source commit: `3221e00f5d1514ed90bd814f869c0b99bb4860dc
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1564648697>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1743336965>
 
 
 
@@ -93,18 +93,18 @@ This dataset updates ensembl genes to current, representative ensembl genes. We 
 
 This dataset contains cross-references (xrefs) from Ensembl genes to various external gene resources.
 
-| ensembl_gene_id    | xref_source   | xref_accession     | xref_label         | xref_description                      | xref_info_type   | xref_linkage_annotation   |
-|:-------------------|:--------------|:-------------------|:-------------------|:--------------------------------------|:-----------------|:--------------------------|
-| ENSRNOG00000000001 | ArrayExpress  | ENSRNOG00000000001 | ENSRNOG00000000001 | <NA>                                  | DIRECT           |                           |
-| ENSRNOG00000000001 | EntrezGene    | 311013             | Arsj               | arylsulfatase family, member J        | DEPENDENT        |                           |
-| ENSRNOG00000000001 | RGD           | 1307640            | Arsj               | arylsulfatase family, member J        | DEPENDENT        |                           |
-| ENSRNOG00000000001 | RGD           | 15003202           | AABR07013255.1     | <NA>                                  | DIRECT           |                           |
-| ENSRNOG00000000001 | Uniprot_gn    | Q32KJ7             | Arsj               | <NA>                                  | DEPENDENT        |                           |
-| ENSRNOG00000000001 | WikiGene      | 311013             | Arsj               | arylsulfatase family, member J        | DEPENDENT        |                           |
-| ENSRNOG00000000007 | ArrayExpress  | ENSRNOG00000000007 | ENSRNOG00000000007 | <NA>                                  | DIRECT           |                           |
-| ENSRNOG00000000007 | EntrezGene    | 24379              | Gad1               | glutamate decarboxylase 1             | DEPENDENT        |                           |
-| ENSRNOG00000000007 | Reactome_gene | R-RNO-112310       | R-RNO-112310       | Neurotransmitter release cycle        | DIRECT           |                           |
-| ENSRNOG00000000007 | Reactome_gene | R-RNO-112315       | R-RNO-112315       | Transmission across Chemical Synapses | DIRECT           |                           |
+| ensembl_representative_gene_id   | ensembl_gene_id    | xref_source   | xref_accession     | xref_label         | xref_description               | xref_info_type   | xref_linkage_annotation   | xref_curie                      |
+|:---------------------------------|:-------------------|:--------------|:-------------------|:-------------------|:-------------------------------|:-----------------|:--------------------------|:--------------------------------|
+| ENSRNOG00000000001               | ENSRNOG00000000001 | ArrayExpress  | ENSRNOG00000000001 | ENSRNOG00000000001 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000001 |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | EntrezGene    | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | ncbigene:311013                 |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | RGD           | 1307640            | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | rgd:1307640                     |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | RGD           | 15003202           | AABR07013255.1     | <NA>                           | DIRECT           |                           | rgd:15003202                    |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Uniprot_gn    | Q32KJ7             | Arsj               | <NA>                           | DEPENDENT        |                           | <NA>                            |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | WikiGene      | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | <NA>                            |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | ArrayExpress  | ENSRNOG00000000007 | ENSRNOG00000000007 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000007 |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | EntrezGene    | 24379              | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | ncbigene:24379                  |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | RGD           | 2652               | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | rgd:2652                        |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | Reactome_gene | R-RNO-112310       | R-RNO-112310       | Neurotransmitter release cycle | DIRECT           |                           | <NA>                            |
 
 
 
