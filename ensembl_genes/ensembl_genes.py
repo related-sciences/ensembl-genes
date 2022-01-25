@@ -8,6 +8,7 @@ from functools import cached_property
 from typing import Tuple, Union
 
 import pandas as pd
+from bioregistry import normalize_curie
 
 from ensembl_genes.releases import check_ensembl_release
 
@@ -331,18 +332,32 @@ class Ensembl_Gene_Queries:
         return update_df
 
     @cached_property
-    def xref_df(self) -> pd.DataFrame:
+    def _xref_raw_df(self) -> pd.DataFrame:
         return self.run_query("gene_xrefs")
+
+    @cached_property
+    def xref_df(self) -> pd.DataFrame:
+        xref_df = self._xref_raw_df
+        xref_df["xref_curie"] = (
+            xref_df.xref_source + ":" + xref_df.xref_accession
+        ).map(normalize_curie)
+        return (
+            self.gene_df[["ensembl_representative_gene_id", "ensembl_gene_id"]]
+            .merge(xref_df)
+            .sort_values(
+                [
+                    "ensembl_representative_gene_id",
+                    "xref_source",
+                    "xref_accession",
+                    "ensembl_gene_id",
+                ]
+            )
+        )
 
     @cached_property
     def xref_ncbigene_df(self) -> pd.DataFrame:
         return (
             self.xref_df.query("xref_source == 'EntrezGene'")
-            .merge(
-                self.gene_df[
-                    ["ensembl_gene_id", "ensembl_representative_gene_id", "seq_region"]
-                ]
-            )
             .rename(columns={"xref_accession": "ncbigene_id"})[
                 ["ensembl_representative_gene_id", "ncbigene_id"]
             ]
@@ -356,7 +371,7 @@ class Ensembl_Gene_Queries:
         Mappings between ensembl and Locus Reference Genomic (LRG) gene identifiers.
         Refs internal Related Sciences issue 289.
         """
-        xref_lrg_df = self.xref_df.query("xref_source == 'ENS_LRG_gene'").rename(
+        xref_lrg_df = self._xref_raw_df.query("xref_source == 'ENS_LRG_gene'").rename(
             columns={"xref_accession": "lrg_gene_id"}
         )[["ensembl_gene_id", "lrg_gene_id"]]
         self._check_xref_lrg_df(xref_lrg_df)
