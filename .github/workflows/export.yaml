@@ -68,7 +68,7 @@ jobs:
       if: always() && steps.extract.outcome == 'failure'
       uses: actions/upload-artifact@v2
       with:
-        name: failed_${{ steps.params.outputs.output_path }}
+        name: failed_output_${{ steps.params.outputs.database }}
         path: ${{ steps.params.outputs.output_path }}
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
