@@ -139,16 +139,16 @@ class Ensembl_Gene_Queries:
             "is_representative_gene",
             "representative_gene_method",
         ]
-        alt_allele_df = (
-            alt_allele_df.groupby("alt_allele_group_id").apply(
+        if not alt_allele_df.empty:
+            alt_allele_df = alt_allele_df.groupby("alt_allele_group_id").apply(
                 self._alt_allele_add_representative
             )
+        else:
             # Force expected output columns, since groupby-apply does not add columns
             # from _alt_allele_add_representative when alt_allele_df is empty.
-            .reindex(columns=expected_cols)
-            # ensembl_gene_id can be duplicated due to multiple alt_allele_attrib values
-            .drop_duplicates("ensembl_gene_id", keep="first")
-        )
+            alt_allele_df = alt_allele_df.reindex(columns=expected_cols)
+        # ensembl_gene_id can be duplicated due to multiple alt_allele_attrib values
+        alt_allele_df = alt_allele_df.drop_duplicates("ensembl_gene_id", keep="first")
         self._check_alt_allele_df(alt_allele_df)
         return alt_allele_df
 
