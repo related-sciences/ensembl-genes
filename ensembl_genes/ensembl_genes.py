@@ -5,7 +5,7 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import Tuple, Union
+from typing import ClassVar, Tuple, Union
 
 import pandas as pd
 from bioregistry import normalize_curie
@@ -335,11 +335,28 @@ class Ensembl_Gene_Queries:
     def _xref_raw_df(self) -> pd.DataFrame:
         return self.run_query("gene_xrefs")
 
+    _xref_prefix_updater: ClassVar[dict[str, str]] = {
+        "ENS_LRG_gene": "lrg",
+        "MIM_GENE": "mim",
+        "MIM_MORBID": "mim",
+        "Reactome_gene": "reactome",
+        "Uniprot_gn": "uniprot",
+        "WikiGene": "wikigenes",
+    }
+    """
+    Mapping of Ensembl cross-reference prefix to standard prefix.
+    Only needs to include prefixes that are not synonyms in the
+    Bioregistry resource record.
+    https://github.com/biopragmatics/bioregistry/issues/294
+    """
+
     @cached_property
     def xref_df(self) -> pd.DataFrame:
         xref_df = self._xref_raw_df
         xref_df["xref_curie"] = (
-            xref_df.xref_source + ":" + xref_df.xref_accession
+            xref_df.xref_source.replace(self._xref_prefix_updater)
+            + ":"
+            + xref_df.xref_accession
         ).map(normalize_curie)
         return (
             self.gene_df[["ensembl_representative_gene_id", "ensembl_gene_id"]]
