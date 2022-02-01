@@ -7,10 +7,10 @@
 - database: `rattus_norvegicus_core_105_72`
 - release: 105
 - assembly: 72
-- export date: 2022-01-25T02:52:09.791239
-- source commit: `3221e00f5d1514ed90bd814f869c0b99bb4860dc
+- export date: 2022-02-01T04:56:05.683564
+- source commit: `f48f9f23427a34a8920bea19b9b7c220eb43facc
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1743336965>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1776489363>
 
 
 
@@ -93,18 +93,18 @@ This dataset updates ensembl genes to current, representative ensembl genes. We 
 
 This dataset contains cross-references (xrefs) from Ensembl genes to various external gene resources.
 
-| ensembl_representative_gene_id   | ensembl_gene_id    | xref_source   | xref_accession     | xref_label         | xref_description               | xref_info_type   | xref_linkage_annotation   | xref_curie                      |
-|:---------------------------------|:-------------------|:--------------|:-------------------|:-------------------|:-------------------------------|:-----------------|:--------------------------|:--------------------------------|
-| ENSRNOG00000000001               | ENSRNOG00000000001 | ArrayExpress  | ENSRNOG00000000001 | ENSRNOG00000000001 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000001 |
-| ENSRNOG00000000001               | ENSRNOG00000000001 | EntrezGene    | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | ncbigene:311013                 |
-| ENSRNOG00000000001               | ENSRNOG00000000001 | RGD           | 1307640            | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | rgd:1307640                     |
-| ENSRNOG00000000001               | ENSRNOG00000000001 | RGD           | 15003202           | AABR07013255.1     | <NA>                           | DIRECT           |                           | rgd:15003202                    |
-| ENSRNOG00000000001               | ENSRNOG00000000001 | Uniprot_gn    | Q32KJ7             | Arsj               | <NA>                           | DEPENDENT        |                           | <NA>                            |
-| ENSRNOG00000000001               | ENSRNOG00000000001 | WikiGene      | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | <NA>                            |
-| ENSRNOG00000000007               | ENSRNOG00000000007 | ArrayExpress  | ENSRNOG00000000007 | ENSRNOG00000000007 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000007 |
-| ENSRNOG00000000007               | ENSRNOG00000000007 | EntrezGene    | 24379              | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | ncbigene:24379                  |
-| ENSRNOG00000000007               | ENSRNOG00000000007 | RGD           | 2652               | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | rgd:2652                        |
-| ENSRNOG00000000007               | ENSRNOG00000000007 | Reactome_gene | R-RNO-112310       | R-RNO-112310       | Neurotransmitter release cycle | DIRECT           |                           | <NA>                            |
+| ensembl_representative_gene_id   | ensembl_gene_id    | gene_symbol   | xref_source   | xref_accession     | xref_label         | xref_description               | xref_info_type   | xref_linkage_annotation   | xref_curie                      |
+|:---------------------------------|:-------------------|:--------------|:--------------|:-------------------|:-------------------|:-------------------------------|:-----------------|:--------------------------|:--------------------------------|
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | ArrayExpress  | ENSRNOG00000000001 | ENSRNOG00000000001 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000001 |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | EntrezGene    | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | ncbigene:311013                 |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | RGD           | 1307640            | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | rgd:1307640                     |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | RGD           | 15003202           | AABR07013255.1     | <NA>                           | DIRECT           |                           | rgd:15003202                    |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | Uniprot_gn    | Q32KJ7             | Arsj               | <NA>                           | DEPENDENT        |                           | uniprot:Q32KJ7                  |
+| ENSRNOG00000000001               | ENSRNOG00000000001 | Arsj          | WikiGene      | 311013             | Arsj               | arylsulfatase family, member J | DEPENDENT        |                           | wikigenes:311013                |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | Gad1          | ArrayExpress  | ENSRNOG00000000007 | ENSRNOG00000000007 | <NA>                           | DIRECT           |                           | arrayexpress:ENSRNOG00000000007 |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | Gad1          | EntrezGene    | 24379              | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | ncbigene:24379                  |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | Gad1          | RGD           | 2652               | Gad1               | glutamate decarboxylase 1      | DEPENDENT        |                           | rgd:2652                        |
+| ENSRNOG00000000007               | ENSRNOG00000000007 | Gad1          | Reactome_gene | R-RNO-112310       | R-RNO-112310       | Neurotransmitter release cycle | DIRECT           |                           | reactome:R-RNO-112310           |
 
 
 
@@ -113,18 +113,18 @@ This dataset contains cross-references (xrefs) from Ensembl genes to various ext
 
 This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes.
 
-| ensembl_representative_gene_id   |   ncbigene_id |
-|:---------------------------------|--------------:|
-| ENSRNOG00000000001               |        311013 |
-| ENSRNOG00000000007               |         24379 |
-| ENSRNOG00000000008               |        296511 |
-| ENSRNOG00000000009               |        366158 |
-| ENSRNOG00000000010               |        498922 |
-| ENSRNOG00000000012               |        296272 |
-| ENSRNOG00000000017               |        297738 |
-| ENSRNOG00000000024               |        362454 |
-| ENSRNOG00000000033               |        305095 |
-| ENSRNOG00000000034               |        289419 |
+| ensembl_representative_gene_id   |   ncbigene_id | gene_symbol   | ncbigene_symbol   |
+|:---------------------------------|--------------:|:--------------|:------------------|
+| ENSRNOG00000000001               |        311013 | Arsj          | Arsj              |
+| ENSRNOG00000000007               |         24379 | Gad1          | Gad1              |
+| ENSRNOG00000000008               |        296511 | Alx4          | Alx4              |
+| ENSRNOG00000000009               |        366158 | Tmco5b        | Tmco5b            |
+| ENSRNOG00000000010               |        498922 | Cbln1         | Cbln1             |
+| ENSRNOG00000000012               |        296272 | Tcf15         | Tcf15             |
+| ENSRNOG00000000017               |        297738 | Steap1        | Steap1            |
+| ENSRNOG00000000024               |        362454 | Hebp1         | Hebp1             |
+| ENSRNOG00000000033               |        305095 | Tmcc2         | Tmcc2             |
+| ENSRNOG00000000034               |        289419 | Nuak2         | Nuak2             |
 
 
 
