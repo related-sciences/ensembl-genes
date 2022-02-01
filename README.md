@@ -7,10 +7,10 @@
 - database: `mus_musculus_core_105_39`
 - release: 105
 - assembly: 39
-- export date: 2021-12-10T18:20:18.298647
-- source commit: `a04d1eefa2ac16edfc7cc869447399c6351153f1
+- export date: 2022-02-01T04:59:03.503292
+- source commit: `f48f9f23427a34a8920bea19b9b7c220eb43facc
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1564648697>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1776489363>
 
 
 
@@ -93,18 +93,18 @@ This dataset updates ensembl genes to current, representative ensembl genes. We 
 
 This dataset contains cross-references (xrefs) from Ensembl genes to various external gene resources.
 
-| ensembl_gene_id    | xref_source   | xref_accession     | xref_label         | xref_description                                                   | xref_info_type   | xref_linkage_annotation   |
-|:-------------------|:--------------|:-------------------|:-------------------|:-------------------------------------------------------------------|:-----------------|:--------------------------|
-| ENSMUSG00000000001 | ArrayExpress  | ENSMUSG00000000001 | ENSMUSG00000000001 | <NA>                                                               | DIRECT           |                           |
-| ENSMUSG00000000001 | EntrezGene    | 14679              | Gnai3              | guanine nucleotide binding protein (G protein), alpha inhibiting 3 | DEPENDENT        |                           |
-| ENSMUSG00000000001 | MGI           | MGI:95773          | Gnai3              | guanine nucleotide binding protein (G protein), alpha inhibiting 3 | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-109582       | R-MMU-109582       | Hemostasis                                                         | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-111885       | R-MMU-111885       | Opioid Signalling                                                  | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-112040       | R-MMU-112040       | G-protein mediated events                                          | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-112314       | R-MMU-112314       | Neurotransmitter receptors and postsynaptic signal transmission    | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-112315       | R-MMU-112315       | Transmission across Chemical Synapses                              | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-112316       | R-MMU-112316       | Neuronal System                                                    | DIRECT           |                           |
-| ENSMUSG00000000001 | Reactome_gene | R-MMU-162582       | R-MMU-162582       | Signal Transduction                                                | DIRECT           |                           |
+| ensembl_representative_gene_id   | ensembl_gene_id    | gene_symbol   | xref_source   | xref_accession     | xref_label         | xref_description                                                   | xref_info_type   | xref_linkage_annotation   | xref_curie                      |
+|:---------------------------------|:-------------------|:--------------|:--------------|:-------------------|:-------------------|:-------------------------------------------------------------------|:-----------------|:--------------------------|:--------------------------------|
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | ArrayExpress  | ENSMUSG00000000001 | ENSMUSG00000000001 | <NA>                                                               | DIRECT           |                           | arrayexpress:ENSMUSG00000000001 |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | EntrezGene    | 14679              | Gnai3              | guanine nucleotide binding protein (G protein), alpha inhibiting 3 | DEPENDENT        |                           | ncbigene:14679                  |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | MGI           | MGI:95773          | Gnai3              | guanine nucleotide binding protein (G protein), alpha inhibiting 3 | DIRECT           |                           | mgi:95773                       |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-109582       | R-MMU-109582       | Hemostasis                                                         | DIRECT           |                           | reactome:R-MMU-109582           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-111885       | R-MMU-111885       | Opioid Signalling                                                  | DIRECT           |                           | reactome:R-MMU-111885           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-112040       | R-MMU-112040       | G-protein mediated events                                          | DIRECT           |                           | reactome:R-MMU-112040           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-112314       | R-MMU-112314       | Neurotransmitter receptors and postsynaptic signal transmission    | DIRECT           |                           | reactome:R-MMU-112314           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-112315       | R-MMU-112315       | Transmission across Chemical Synapses                              | DIRECT           |                           | reactome:R-MMU-112315           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-112316       | R-MMU-112316       | Neuronal System                                                    | DIRECT           |                           | reactome:R-MMU-112316           |
+| ENSMUSG00000000001               | ENSMUSG00000000001 | Gnai3         | Reactome_gene | R-MMU-162582       | R-MMU-162582       | Signal Transduction                                                | DIRECT           |                           | reactome:R-MMU-162582           |
 
 
 
@@ -113,18 +113,18 @@ This dataset contains cross-references (xrefs) from Ensembl genes to various ext
 
 This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes.
 
-| ensembl_representative_gene_id   |   ncbigene_id |
-|:---------------------------------|--------------:|
-| ENSMUSG00000000001               |         14679 |
-| ENSMUSG00000000003               |         54192 |
-| ENSMUSG00000000028               |         12544 |
-| ENSMUSG00000000037               |        107815 |
-| ENSMUSG00000000049               |         11818 |
-| ENSMUSG00000000056               |         67608 |
-| ENSMUSG00000000058               |         12390 |
-| ENSMUSG00000000078               |         23849 |
-| ENSMUSG00000000085               |         29871 |
-| ENSMUSG00000000088               |         12858 |
+| ensembl_representative_gene_id   |   ncbigene_id | gene_symbol   | ncbigene_symbol   |
+|:---------------------------------|--------------:|:--------------|:------------------|
+| ENSMUSG00000000001               |         14679 | Gnai3         | Gnai3             |
+| ENSMUSG00000000003               |         54192 | Pbsn          | Pbsn              |
+| ENSMUSG00000000028               |         12544 | Cdc45         | Cdc45             |
+| ENSMUSG00000000037               |        107815 | Scml2         | Scml2             |
+| ENSMUSG00000000049               |         11818 | Apoh          | Apoh              |
+| ENSMUSG00000000056               |         67608 | Narf          | Narf              |
+| ENSMUSG00000000058               |         12390 | Cav2          | Cav2              |
+| ENSMUSG00000000078               |         23849 | Klf6          | Klf6              |
+| ENSMUSG00000000085               |         29871 | Scmh1         | Scmh1             |
+| ENSMUSG00000000088               |         12858 | Cox5a         | Cox5a             |
 
 
 
