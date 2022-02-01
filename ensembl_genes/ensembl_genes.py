@@ -359,7 +359,9 @@ class Ensembl_Gene_Queries:
             + xref_df.xref_accession
         ).map(normalize_curie)
         return (
-            self.gene_df[["ensembl_representative_gene_id", "ensembl_gene_id"]]
+            self.gene_df[
+                ["ensembl_representative_gene_id", "ensembl_gene_id", "gene_symbol"]
+            ]
             .merge(xref_df)
             .sort_values(
                 [
@@ -373,13 +375,39 @@ class Ensembl_Gene_Queries:
 
     @cached_property
     def xref_ncbigene_df(self) -> pd.DataFrame:
+        """
+        Return a representative ensembl gene to NCBI Gene mapping.
+        For each ensembl_representative_gene_id, only the top NCBI mapping is retained.
+        Filtering out additional mappings helps address issues that result from
+        Ensembl-NCBIGene cross-references being based on transcript similarity,
+        rather than actual gene identity:
+        https://github.com/related-sciences/ensembl-genes/issues/5
+        https://github.com/related-sciences/ensembl-genes/issues/10
+        """
         return (
             self.xref_df.query("xref_source == 'EntrezGene'")
-            .rename(columns={"xref_accession": "ncbigene_id"})[
-                ["ensembl_representative_gene_id", "ncbigene_id"]
+            .rename(
+                columns={
+                    "xref_accession": "ncbigene_id",
+                    "xref_label": "ncbigene_symbol",
+                }
+            )
+            .eval(
+                "is_representative = ensembl_representative_gene_id == ensembl_gene_id"
+            )
+            .eval("symbol_match = gene_symbol == ncbigene_symbol")
+            .sort_values(
+                ["ensembl_representative_gene_id", "symbol_match", "is_representative"],
+                ascending=[True, False, False],
+            )
+            .drop_duplicates("ensembl_representative_gene_id", keep="first")[
+                [
+                    "ensembl_representative_gene_id",
+                    "ncbigene_id",
+                    "gene_symbol",
+                    "ncbigene_symbol",
+                ]
             ]
-            .drop_duplicates(["ensembl_representative_gene_id", "ncbigene_id"])
-            .sort_values(["ensembl_representative_gene_id", "ncbigene_id"])
         )
 
     @cached_property
