@@ -18,7 +18,7 @@ ensembl_genes = "ensembl_genes.ensembl_genes:Commands.command"
 # https://python-poetry.org/docs/versions/
 [tool.poetry.dependencies]
 python = "^3.9"
-fastparquet = "^0.7.1"
+pyarrow = "^7.0.0"
 fire = "^0.4.0"
 jupyter = "^1.0.0"
 mysql-connector-python = "^8.0.26"
