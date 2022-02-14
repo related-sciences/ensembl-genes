@@ -7,10 +7,10 @@
 - database: `homo_sapiens_core_105_38`
 - release: 105
 - assembly: 38
-- export date: 2022-02-01T04:59:52.359985
-- source commit: `f48f9f23427a34a8920bea19b9b7c220eb43facc
+- export date: 2022-02-14T23:21:29.268109
+- source commit: `15f79200d27fa1d3ff5b597b0dc79628742e71a7
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1776489363>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1843999633>
 
 
 
