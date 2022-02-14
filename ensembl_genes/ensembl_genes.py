@@ -557,7 +557,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         gz_compression = {"method": "gzip", "mtime": 0}
         if ExportFormat.parquet in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.snappy.parquet")
-            df.to_parquet(path, compression="snappy", index=False)
+            df.to_parquet(path, compression="snappy", engine="pyarrow", index=False)
         if ExportFormat.tsv in export.export_formats:
             path = self.output_directory.joinpath(f"{export.name}.tsv.gz")
             df.to_csv(path, index=False, sep="\t", compression=gz_compression)
