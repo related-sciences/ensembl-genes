@@ -7,10 +7,10 @@
 - database: `homo_sapiens_core_105_38`
 - release: 105
 - assembly: 38
-- export date: 2022-02-14T23:21:29.268109
-- source commit: `15f79200d27fa1d3ff5b597b0dc79628742e71a7
+- export date: 2022-03-04T14:45:01.436689
+- source commit: `abe894419af316c3617b0e55268f634eaedbcb89
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1843999633>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1934252854>
 
 
 
@@ -143,17 +143,17 @@ This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entre
 
 This dataset contains cross-references (xrefs) from Ensembl genes to Gene Ontology terms, as asserted by Gene Ontology annotations.
 
-| ensembl_gene_id   | go_id      | go_label                                                                                        | go_evidence_codes   | xref_info_types   | ensembl_transcript_ids                          | ensembl_representative_gene_id   |
-|:------------------|:-----------|:------------------------------------------------------------------------------------------------|:--------------------|:------------------|:------------------------------------------------|:---------------------------------|
-| ENSG00000000003   | GO:0005515 | protein binding                                                                                 | IPI                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0005887 | integral component of plasma membrane                                                           | IBA                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0016020 | membrane                                                                                        | IEA                 | DIRECT            | ENST00000373020,ENST00000612152,ENST00000614008 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0016021 | integral component of membrane                                                                  | IEA                 | DEPENDENT,DIRECT  | ENST00000373020,ENST00000612152,ENST00000614008 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0039532 | negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway | IMP                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0043123 | positive regulation of I-kappaB kinase/NF-kappaB signaling                                      | HMP                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000003   | GO:0070062 | extracellular exosome                                                                           | HDA                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000003   | GO:1901223 | negative regulation of NIK/NF-kappaB signaling                                                  | IDA                 | DIRECT            | ENST00000373020                                 | ENSG00000000003                  |
-| ENSG00000000005   | GO:0001886 | endothelial cell morphogenesis                                                                  | IBA,IEA             | PROJECTION,DIRECT | ENST00000373031                                 | ENSG00000000005                  |
-| ENSG00000000005   | GO:0001937 | negative regulation of endothelial cell proliferation                                           | IBA,IEA             | PROJECTION,DIRECT | ENST00000373031                                 | ENSG00000000005                  |
+| ensembl_gene_id   | go_id      | go_label                                                                                        | go_evidence_codes   | xref_info_types   | xref_info_texts                                             | ensembl_transcript_ids                          | ensembl_representative_gene_id   |
+|:------------------|:-----------|:------------------------------------------------------------------------------------------------|:--------------------|:------------------|:------------------------------------------------------------|:------------------------------------------------|:---------------------------------|
+| ENSG00000000003   | GO:0005515 | protein binding                                                                                 | IPI                 | DIRECT            | UniProt                                                     | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0005887 | integral component of plasma membrane                                                           | IBA                 | DIRECT            | GO_Central                                                  | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0016020 | membrane                                                                                        | IEA                 | DIRECT            | UniProt                                                     | ENST00000373020,ENST00000612152,ENST00000614008 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0016021 | integral component of membrane                                                                  | IEA                 | DEPENDENT,DIRECT  | ,InterPro,UniProt                                           | ENST00000373020,ENST00000612152,ENST00000614008 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0039532 | negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway | IMP                 | DIRECT            | UniProt                                                     | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0043123 | positive regulation of I-kappaB kinase/NF-kappaB signaling                                      | HMP                 | DIRECT            | UniProt                                                     | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000003   | GO:0070062 | extracellular exosome                                                                           | HDA                 | DIRECT            | UniProt                                                     | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000003   | GO:1901223 | negative regulation of NIK/NF-kappaB signaling                                                  | IDA                 | DIRECT            | UniProt                                                     | ENST00000373020                                 | ENSG00000000003                  |
+| ENSG00000000005   | GO:0001886 | endothelial cell morphogenesis                                                                  | IBA,IEA             | PROJECTION,DIRECT | from mus_musculus translation ENSMUSP00000033602,GO_Central | ENST00000373031                                 | ENSG00000000005                  |
+| ENSG00000000005   | GO:0001937 | negative regulation of endothelial cell proliferation                                           | IBA,IEA             | PROJECTION,DIRECT | from mus_musculus translation ENSMUSP00000033602,GO_Central | ENST00000373031                                 | ENSG00000000005                  |
 
 
