@@ -9,6 +9,7 @@ SELECT
   xref.description AS go_label,
   GROUP_CONCAT(DISTINCT object_xref.linkage_annotation ORDER BY object_xref.linkage_annotation) AS go_evidence_codes,
   GROUP_CONCAT(DISTINCT xref.info_type ORDER BY xref.info_type) AS xref_info_types,
+  GROUP_CONCAT(DISTINCT xref.info_text ORDER BY xref.info_text) AS xref_info_texts,
   GROUP_CONCAT(DISTINCT transcript.stable_id ORDER BY transcript.stable_id) AS ensembl_transcript_ids
 FROM gene
 INNER JOIN transcript 
