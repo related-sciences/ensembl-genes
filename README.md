@@ -7,10 +7,10 @@
 - database: `rattus_norvegicus_core_105_72`
 - release: 105
 - assembly: 72
-- export date: 2022-02-14T23:17:56.075012
-- source commit: `15f79200d27fa1d3ff5b597b0dc79628742e71a7
+- export date: 2022-03-04T14:40:53.802292
+- source commit: `abe894419af316c3617b0e55268f634eaedbcb89
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1843999633>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1934252854>
 
 
 
@@ -133,17 +133,17 @@ This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entre
 
 This dataset contains cross-references (xrefs) from Ensembl genes to Gene Ontology terms, as asserted by Gene Ontology annotations.
 
-| ensembl_gene_id    | go_id      | go_label                                     | go_evidence_codes   | xref_info_types   | ensembl_transcript_ids                                   | ensembl_representative_gene_id   |
-|:-------------------|:-----------|:---------------------------------------------|:--------------------|:------------------|:---------------------------------------------------------|:---------------------------------|
-| ENSRNOG00000000001 | GO:0003824 | catalytic activity                           | IEA                 | DEPENDENT,DIRECT  | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
-| ENSRNOG00000000001 | GO:0008484 | sulfuric ester hydrolase activity            | IEA                 | DEPENDENT,DIRECT  | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
-| ENSRNOG00000000001 | GO:0015629 | actin cytoskeleton                           | IEA                 | PROJECTION        | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
-| ENSRNOG00000000001 | GO:0016787 | hydrolase activity                           | IEA                 | DIRECT            | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
-| ENSRNOG00000000007 | GO:0003824 | catalytic activity                           | IEA                 | DEPENDENT,DIRECT  | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
-| ENSRNOG00000000007 | GO:0004351 | glutamate decarboxylase activity             | IEA,ISO,ISS         | PROJECTION,DIRECT | ENSRNOT00000000008,ENSRNOT00000084375,ENSRNOT00000087134 | ENSRNOG00000000007               |
-| ENSRNOG00000000007 | GO:0005737 | cytoplasm                                    | IEA,ISO             | PROJECTION,DIRECT | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
-| ENSRNOG00000000007 | GO:0005938 | cell cortex                                  | IEA,ISO             | PROJECTION,DIRECT | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
-| ENSRNOG00000000007 | GO:0009449 | gamma-aminobutyric acid biosynthetic process | IDA                 | DIRECT            | ENSRNOT00000000008                                       | ENSRNOG00000000007               |
-| ENSRNOG00000000007 | GO:0016595 | glutamate binding                            | IDA                 | DIRECT            | ENSRNOT00000000008                                       | ENSRNOG00000000007               |
+| ensembl_gene_id    | go_id      | go_label                                     | go_evidence_codes   | xref_info_types   | xref_info_texts                                                | ensembl_transcript_ids                                   | ensembl_representative_gene_id   |
+|:-------------------|:-----------|:---------------------------------------------|:--------------------|:------------------|:---------------------------------------------------------------|:---------------------------------------------------------|:---------------------------------|
+| ENSRNOG00000000001 | GO:0003824 | catalytic activity                           | IEA                 | DEPENDENT,DIRECT  | ,InterPro                                                      | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
+| ENSRNOG00000000001 | GO:0008484 | sulfuric ester hydrolase activity            | IEA                 | DEPENDENT,DIRECT  | ,InterPro                                                      | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
+| ENSRNOG00000000001 | GO:0015629 | actin cytoskeleton                           | IEA                 | PROJECTION        | from homo_sapiens translation ENSP00000320219                  | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
+| ENSRNOG00000000001 | GO:0016787 | hydrolase activity                           | IEA                 | DIRECT            | UniProt                                                        | ENSRNOT00000055633                                       | ENSRNOG00000000001               |
+| ENSRNOG00000000007 | GO:0003824 | catalytic activity                           | IEA                 | DEPENDENT,DIRECT  | ,InterPro                                                      | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
+| ENSRNOG00000000007 | GO:0004351 | glutamate decarboxylase activity             | IEA,ISO,ISS         | PROJECTION,DIRECT | from homo_sapiens translation ENSP00000350928,RGD,RHEA,UniProt | ENSRNOT00000000008,ENSRNOT00000084375,ENSRNOT00000087134 | ENSRNOG00000000007               |
+| ENSRNOG00000000007 | GO:0005737 | cytoplasm                                    | IEA,ISO             | PROJECTION,DIRECT | from mus_musculus translation ENSMUSP00000092539,RGD           | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
+| ENSRNOG00000000007 | GO:0005938 | cell cortex                                  | IEA,ISO             | PROJECTION,DIRECT | from mus_musculus translation ENSMUSP00000092539,RGD           | ENSRNOT00000000008,ENSRNOT00000087134                    | ENSRNOG00000000007               |
+| ENSRNOG00000000007 | GO:0009449 | gamma-aminobutyric acid biosynthetic process | IDA                 | DIRECT            | RGD                                                            | ENSRNOT00000000008                                       | ENSRNOG00000000007               |
+| ENSRNOG00000000007 | GO:0016595 | glutamate binding                            | IDA                 | DIRECT            | RGD                                                            | ENSRNOT00000000008                                       | ENSRNOG00000000007               |
 
 
