@@ -7,10 +7,10 @@
 - database: `mus_musculus_core_105_39`
 - release: 105
 - assembly: 39
-- export date: 2022-02-14T23:18:55.422006
-- source commit: `15f79200d27fa1d3ff5b597b0dc79628742e71a7
+- export date: 2022-03-04T14:43:45.472775
+- source commit: `abe894419af316c3617b0e55268f634eaedbcb89
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1843999633>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/1934252854>
 
 
 
@@ -133,17 +133,17 @@ This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entre
 
 This dataset contains cross-references (xrefs) from Ensembl genes to Gene Ontology terms, as asserted by Gene Ontology annotations.
 
-| ensembl_gene_id    | go_id      | go_label                           | go_evidence_codes   | xref_info_types             | ensembl_transcript_ids   | ensembl_representative_gene_id   |
-|:-------------------|:-----------|:-----------------------------------|:--------------------|:----------------------------|:-------------------------|:---------------------------------|
-| ENSMUSG00000000001 | GO:0000139 | Golgi membrane                     | IEA,ISO             | PROJECTION,DIRECT           | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0000166 | nucleotide binding                 | IEA                 | DIRECT                      | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0001664 | G protein-coupled receptor binding | IBA                 | DIRECT                      | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0003924 | GTPase activity                    | IBA,IEA,ISO,ISS     | PROJECTION,DEPENDENT,DIRECT | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005515 | protein binding                    | IPI                 | DIRECT                      | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005525 | GTP binding                        | IEA                 | DEPENDENT,DIRECT            | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005737 | cytoplasm                          | IEA,ISO             | PROJECTION,DIRECT           | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005789 | endoplasmic reticulum membrane     | IEA,ISO             | PROJECTION,DIRECT           | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005794 | Golgi apparatus                    | IDA                 | DIRECT                      | ENSMUST00000000001       | ENSMUSG00000000001               |
-| ENSMUSG00000000001 | GO:0005813 | centrosome                         | IEA,ISO,ISS         | PROJECTION,DIRECT           | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ensembl_gene_id    | go_id      | go_label                           | go_evidence_codes   | xref_info_types             | xref_info_texts                                                                | ensembl_transcript_ids   | ensembl_representative_gene_id   |
+|:-------------------|:-----------|:-----------------------------------|:--------------------|:----------------------------|:-------------------------------------------------------------------------------|:-------------------------|:---------------------------------|
+| ENSMUSG00000000001 | GO:0000139 | Golgi membrane                     | IEA,ISO             | PROJECTION,DIRECT           | from homo_sapiens translation ENSP00000358867,MGI                              | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0000166 | nucleotide binding                 | IEA                 | DIRECT                      | UniProt                                                                        | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0001664 | G protein-coupled receptor binding | IBA                 | DIRECT                      | GO_Central                                                                     | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0003924 | GTPase activity                    | IBA,IEA,ISO,ISS     | PROJECTION,DEPENDENT,DIRECT | ,from homo_sapiens translation ENSP00000358867,GO_Central,InterPro,MGI,UniProt | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005515 | protein binding                    | IPI                 | DIRECT                      | IntAct,MGI                                                                     | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005525 | GTP binding                        | IEA                 | DEPENDENT,DIRECT            | ,InterPro,UniProt                                                              | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005737 | cytoplasm                          | IEA,ISO             | PROJECTION,DIRECT           | from homo_sapiens translation ENSP00000358867,MGI,UniProt                      | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005789 | endoplasmic reticulum membrane     | IEA,ISO             | PROJECTION,DIRECT           | from homo_sapiens translation ENSP00000358867,MGI                              | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005794 | Golgi apparatus                    | IDA                 | DIRECT                      | MGI                                                                            | ENSMUST00000000001       | ENSMUSG00000000001               |
+| ENSMUSG00000000001 | GO:0005813 | centrosome                         | IEA,ISO,ISS         | PROJECTION,DIRECT           | from homo_sapiens translation ENSP00000358867,MGI,UniProt                      | ENSMUST00000000001       | ENSMUSG00000000001               |
 
 
