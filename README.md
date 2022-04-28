@@ -109,3 +109,8 @@ Erin Haskell
 Bronwen L Aken, Sarah Ayling, Daniel Barrell, Laura Clarke, Valery Curwen, Susan Fairley, Julio Fernandez Banet, Konstantinos Billis, Carlos García Girón, Thibaut Hourlier, … Stephen MJ Searle  
 *Database* (2016-06-23)  
 DOI: [10.1093/database/baw093](https://doi.org/10.1093/database/baw093) · PMID: [27337980](https://www.ncbi.nlm.nih.gov/pubmed/27337980) · PMCID: [PMC4919035](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4919035)
+
+5. [**Ensembl core software resources: storage and programmatic access for DNA sequence and genome annotation**](https://doi.org/f94bzs)   
+Magali Ruffier, Andreas Kähäri, Monika Komorowska, Stephen Keenan, Matthew Laird, Ian Longden, Glenn Proctor, Steve Searle, Daniel Staines, Kieron Taylor, … Paul Flicek  
+*Database* (2017-01-01)   
+DOI: [10.1093/database/bax020](https://doi.org/10.1093/database/bax020) · PMID: [28365736](https://www.ncbi.nlm.nih.gov/pubmed/28365736) · PMCID: [PMC5467575](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5467575)
