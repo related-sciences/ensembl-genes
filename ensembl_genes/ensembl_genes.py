@@ -476,8 +476,8 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             query_fxn="gene_df",
             description=(
                 "Primary table of ensembl genes with IDs, symbols, and genomic location information. "
-                "Most users will want to filter this dataset to representative genes only, "
-                "via the `is_representative_gene` column."
+                "Most users will want to filter this dataset to representative genes only "
+                "by taking rows where `ensembl_gene_id == ensembl_representative_gene_id`."
             ),
             export_formats=list(ExportFormat),
         ),
@@ -485,7 +485,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             name="alt_alleles",
             query_fxn="alt_allele_df",
             description=(
-                "This is an intermediate table that groups genes if they are alternate alleles of eachother. "
+                "This is an intermediate table that groups genes if they are alternate alleles of each other. "
                 "A representative gene is selected from each group."
             ),
         ),
