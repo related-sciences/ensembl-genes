@@ -17,7 +17,7 @@ ensembl_genes = "ensembl_genes.ensembl_genes:Commands.command"
 
 # https://python-poetry.org/docs/versions/
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 pyarrow = "^7.0.0"
 fire = "^0.4.0"
 jupyter = "^1.0.0"
@@ -46,7 +46,7 @@ use_parentheses = true
 line_length = 88
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 
 # https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
 [[tool.mypy.overrides]]

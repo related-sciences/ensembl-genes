@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional, Union
 
 from ensembl_genes.models import GeneForMHC
 
@@ -18,7 +17,7 @@ class Species:
     xmhc_upper: int
     chromosomes: list[str]
 
-    def get_mhc_category(self, gene: GeneForMHC) -> Optional[str]:
+    def get_mhc_category(self, gene: GeneForMHC) -> str | None:
         """Assign MHC status of MHC, xMHC, or no to an ensembl gene record."""
         if not self.enable_mhc:
             return None
@@ -98,7 +97,7 @@ rat = Species(
 all_species = [human, mouse, rat]
 
 
-def get_species(species: Union[str, Species]) -> Species:
+def get_species(species: str | Species) -> Species:
     """Lookup species string from defined Species."""
     if isinstance(species, Species):
         return species

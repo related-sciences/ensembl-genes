@@ -5,7 +5,7 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import ClassVar, Tuple, Union
+from typing import ClassVar, Tuple
 
 import pandas as pd
 from bioregistry import normalize_curie
@@ -33,7 +33,7 @@ class Ensembl_Gene_Queries:
     Convert columns listed to the specified type.
     """
 
-    def __init__(self, species: Union[str, Species] = "human", release: str = "latest"):
+    def __init__(self, species: str | Species = "human", release: str = "latest"):
         """Example release '104'."""
         self.species = get_species(species)
         self.release = check_ensembl_release(release)
@@ -539,7 +539,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         "ensembl_genes_eda.ipynb",
     ]
 
-    def __init__(self, species: Union[str, Species], release: str):
+    def __init__(self, species: str | Species, release: str):
         release = str(release)  # protect against fire
         super().__init__(species=species, release=release)
         directory = pathlib.Path("output", self.database)

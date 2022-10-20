@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 
 from ensembl_genes.ensembl_genes import Ensembl_Gene_Queries
@@ -30,9 +28,9 @@ def test_ensembl_gene_queries() -> None:
 )
 def test_ensembl_gene_description_regex(
     raw_description: str,
-    expect_description: Optional[str],
-    expect_src: Optional[str],
-    expect_id: Optional[str],
+    expect_description: str | None,
+    expect_src: str | None,
+    expect_id: str | None,
 ) -> None:
     """
     See https://regex101.com/r/wbW1Qc/1/

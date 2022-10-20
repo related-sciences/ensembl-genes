@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.9
+  python: python3.10
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
@@ -13,7 +13,7 @@ repos:
     rev: v2.32.0
     hooks:
       - id: pyupgrade
-        args: [--py39-plus]
+        args: [--py310-plus]
   - repo: https://github.com/timothycrosley/isort
     rev: 5.10.1
     hooks:
