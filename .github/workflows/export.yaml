@@ -24,7 +24,7 @@ jobs:
         - rat
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup dependencies
       uses: ./.github/actions/setup
     - name: Set parameters
@@ -66,7 +66,7 @@ jobs:
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: failed_output_${{ steps.params.outputs.database }}
         path: ${{ steps.params.outputs.output_path }}
