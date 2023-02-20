@@ -16,7 +16,6 @@ from .species import Species, get_species, human
 
 
 class Ensembl_Gene_Queries:
-
     description_pattern = re.compile(
         r"^(?P<gene_description>.+?)(?P<_desc_src> \[Source:(?P<gene_description_source_db>.+);Acc:(?P<gene_description_source_id>.+)\])?$"
     )
@@ -469,7 +468,6 @@ class DatasetExport:
 
 
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
-
     exports: list[DatasetExport] = [
         DatasetExport(
             name="genes",
