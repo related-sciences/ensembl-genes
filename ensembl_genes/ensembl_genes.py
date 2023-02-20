@@ -239,11 +239,11 @@ class Ensembl_Gene_Queries:
 
     @cached_property
     def old_to_newest_df(self) -> pd.DataFrame:
-        rows = list()
+        rows = []
         for old_id in sorted(self.old_to_new_df.old_ensembl_gene_id.unique()):
             for new_id in sorted(self._update_ensembl_gene(old_id)):
                 rows.append(
-                    dict(old_ensembl_gene_id=old_id, newest_ensembl_gene_id=new_id)
+                    {"old_ensembl_gene_id": old_id, "newest_ensembl_gene_id": new_id}
                 )
         old_to_newest_df = pd.DataFrame(rows)
         old_to_newest_df["is_current"] = old_to_newest_df.newest_ensembl_gene_id.isin(
@@ -598,7 +598,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         papermill.execute_notebook(
             input_path=f"ensembl_genes/notebooks/{notebook}",
             output_path=self.output_directory.joinpath(notebook),
-            parameters=dict(species=self.species.common_name, release=self.release),
+            parameters={"species": self.species.common_name, "release": self.release},
         )
 
 

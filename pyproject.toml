@@ -36,14 +36,22 @@ bioregistry = "^0.4.46"
 pre-commit = "^2.15.0"
 pytest = "^6.2.5"
 
-# https://pycqa.github.io/isort/docs/configuration/config_files.html
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
+[tool.ruff]
+target-version = "py310"
+ignore = [
+    "E501",  # line-too-long (black should handle)
+]
+line-length = 88
+select = [
+    "B",  # flake8-bugbear
+    "C",  # flake8-comprehensions
+    "C90",  # mccabe
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+    "UP",  # pyupgrade
+    "W",  # pycode warnings
+]
 
 [tool.mypy]
 python_version = "3.10"

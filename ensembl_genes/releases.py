@@ -29,8 +29,8 @@ def check_ensembl_release(release: str = "latest") -> str:
         release = get_latest_ensembl_release()
     try:
         int(release)
-    except ValueError:
+    except ValueError as error:
         raise ValueError(
             f"release should be convertible to an int, like '104'. Received {release!r}"
-        )
+        ) from error
     return release
