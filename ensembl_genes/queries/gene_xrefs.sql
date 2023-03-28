@@ -1,3 +1,6 @@
+-- Currently only xrefs to genes are included, not transcripts or translations.
+-- As a result, an xref to uniprot:P0DJI8 is missing. See method for transcript/translation xrefs at
+-- https://genomewiki.ucsc.edu/index.php?title=Xref_in_Ensembl
 SELECT
   gene.stable_id AS ensembl_gene_id,
   external_db.db_name AS xref_source,
@@ -17,7 +20,7 @@ INNER JOIN external_db
 WHERE
   -- all genes were current when query was written, ensure this is always the case
   gene.is_current AND
-  -- -- Refs internal Related Sciences issue 289
+  -- Refs internal Related Sciences issue 289
   gene.biotype != "LRG_gene"
 ORDER BY ensembl_gene_id, xref_source, xref_accession
 -- LIMIT 10
