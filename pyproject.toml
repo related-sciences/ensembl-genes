@@ -13,7 +13,7 @@ license = "Apache-2.0"
 include = ["ensembl_genes/queries/*.sql", "ensembl_genes/notebooks/*.ipynb"]
 
 [tool.poetry.scripts]
-ensembl_genes = "ensembl_genes.ensembl_genes:Commands.command"
+ensembl_genes = "ensembl_genes.commands:Commands.command"
 
 # https://python-poetry.org/docs/versions/
 [tool.poetry.dependencies]
