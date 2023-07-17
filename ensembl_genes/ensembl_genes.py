@@ -538,7 +538,6 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
     ]
 
     def __init__(self, species: str | Species, release: str):
-        release = str(release)  # protect against fire
         super().__init__(species=species, release=release)
         directory = pathlib.Path("output", self.database)
         directory.mkdir(exist_ok=True, parents=True)
@@ -640,7 +639,7 @@ class Commands:
         """
         Run like `poetry run ensembl_genes`
         """
-        import fire
+        import typer
 
         logging.basicConfig()
         logging.getLogger().setLevel(logging.INFO)
@@ -651,4 +650,12 @@ class Commands:
             "ensembl_release": check_ensembl_release,
             "ensembl_database": cls.get_ensembl_database,
         }
-        fire.Fire(commands)
+
+        def print_result(result: str) -> None:
+            if result is not None:
+                typer.echo(result)
+
+        cli = typer.Typer(result_callback=print_result)
+        for command_name, command_fxn in commands.items():
+            cli.command(name=command_name)(command_fxn)  # type: ignore [type-var]
+        cli()
