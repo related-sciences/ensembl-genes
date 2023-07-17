@@ -5,7 +5,7 @@ import subprocess
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import cached_property
-from typing import ClassVar, Tuple
+from typing import ClassVar
 
 import pandas as pd
 from bioregistry import normalize_curie
@@ -157,7 +157,7 @@ class Ensembl_Gene_Queries:
         assert dup_df.empty
 
     @staticmethod
-    def _alt_allele_get_representative(df: pd.DataFrame) -> "Tuple[str, str]":
+    def _alt_allele_get_representative(df: pd.DataFrame) -> "tuple[str, str]":
         """
         For a subset of the alt_allele_df corresponding to a single `alt_allele_group_id`,
         return a (ensembl_representative_gene_id, representative_gene_method) tuple,
