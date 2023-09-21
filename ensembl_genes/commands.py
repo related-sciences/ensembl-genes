@@ -31,12 +31,13 @@ class Commands:
         ensgc = Ensembl_Gene_Catalog_Writer(species=species, release=release)
         ensgc.export_notebooks()
 
-    @classmethod
+    @staticmethod
     @cli.command(name="all")
-    def export_all(cls, species: str = "human", release: str = "latest") -> None:
+    def export_all(species: str = "human", release: str = "latest") -> None:
         """Export datasets and then notebooks."""
-        cls.export_datasets(species=species, release=release)
-        cls.export_notebooks(species=species, release=release)
+        # Cannot use a classmethod here <https://github.com/related-sciences/ensembl-genes/issues/23>
+        Commands.export_datasets(species=species, release=release)
+        Commands.export_notebooks(species=species, release=release)
 
     @staticmethod
     @cli.command(name="ensembl_release")
@@ -57,8 +58,8 @@ class Commands:
         ensgc = Ensembl_Gene_Queries(species=species, release=release)
         print(ensgc.database)
 
-    @classmethod
-    def command(cls) -> None:
+    @staticmethod
+    def command() -> None:
         """
         Run like `poetry run ensembl_genes`
         """
