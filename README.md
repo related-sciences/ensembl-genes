@@ -7,10 +7,10 @@
 - database: `homo_sapiens_core_111_38`
 - release: 111
 - assembly: 38
-- export date: 2024-02-15T00:36:05.460886
-- source commit: `eb7c779369d215e08761e4b509eb8c32655aefc5
+- export date: 2024-02-15T16:33:56.751825
+- source commit: `d2ecc10a2484d783db01f9760ce669e7be8416eb
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7909230546>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7919013544>
 
 
 
@@ -43,20 +43,20 @@ Contains 70,711 rows.
 ### alt_alleles
 
 This is an intermediate table that groups genes if they are alternate alleles of each other. A representative gene is selected from each group.
-Contains 10,543 rows.
+Contains 72,035 rows.
 
-| ensembl_gene_id   |   alt_allele_group_id | alt_allele_is_representative   | primary_assembly   | seq_region    | alt_allele_attrib      | ensembl_created_date   | ensembl_representative_gene_id   | is_representative_gene   | representative_gene_method   |
-|:------------------|----------------------:|:-------------------------------|:-------------------|:--------------|:-----------------------|:-----------------------|:---------------------------------|:-------------------------|:-----------------------------|
-| ENSG00000282572   |                 44429 | True                           | True               | 7             | IS_REPRESENTATIVE      | 2015-06-01 18:57:05    | ENSG00000282572                  | True                     | alt_allele_is_representative |
-| ENSG00000281951   |                 44429 | False                          | False              | HSCHR7_2_CTG1 | AUTOMATICALLY_ASSIGNED | 2015-06-01 18:57:05    | ENSG00000282572                  | False                    | alt_allele_is_representative |
-| ENSG00000273644   |                 44430 | True                           | True               | 7             | IS_REPRESENTATIVE      | 2014-06-09 10:49:07    | ENSG00000273644                  | True                     | alt_allele_is_representative |
-| ENSG00000282333   |                 44430 | False                          | False              | HSCHR7_2_CTG1 | AUTOMATICALLY_ASSIGNED | 2015-06-01 18:57:05    | ENSG00000273644                  | False                    | alt_allele_is_representative |
-| ENSG00000232325   |                 44431 | True                           | True               | 7             | IS_REPRESENTATIVE      | 2009-05-19 09:47:17    | ENSG00000232325                  | True                     | alt_allele_is_representative |
-| ENSG00000281993   |                 44431 | False                          | False              | HSCHR7_1_CTG1 | AUTOMATICALLY_ASSIGNED | 2015-06-01 18:57:05    | ENSG00000232325                  | False                    | alt_allele_is_representative |
-| ENSG00000282645   |                 44431 | False                          | False              | HSCHR7_2_CTG1 | AUTOMATICALLY_ASSIGNED | 2015-06-01 18:57:05    | ENSG00000232325                  | False                    | alt_allele_is_representative |
-| ENSG00000288372   |                 44431 | False                          | False              | HG1309_PATCH  | AUTOMATICALLY_ASSIGNED | 2019-06-15 05:41:31    | ENSG00000232325                  | False                    | alt_allele_is_representative |
-| ENSG00000242611   |                 44432 | True                           | True               | 7             | IS_REPRESENTATIVE      | 2009-08-05 14:27:16    | ENSG00000242611                  | True                     | alt_allele_is_representative |
-| ENSG00000282155   |                 44432 | False                          | False              | HSCHR7_1_CTG1 | AUTOMATICALLY_ASSIGNED | 2015-06-01 18:57:05    | ENSG00000242611                  | False                    | alt_allele_is_representative |
+|   rs_allele_group | ensembl_gene_id   | gene_symbol   | ensembl_created_date   | seq_region    | primary_assembly   |   alt_allele_group_id | alt_allele_attrib      | alt_allele_is_representative   | ensembl_representative_gene_id   | is_representative_gene   |
+|------------------:|:------------------|:--------------|:-----------------------|:--------------|:-------------------|----------------------:|:-----------------------|:-------------------------------|:---------------------------------|:-------------------------|
+|             44430 | ENSG00000273644   | <NA>          | 2014-06-09 10:49:07    | 7             | True               |                 44430 | IS_REPRESENTATIVE      | True                           | ENSG00000273644                  | True                     |
+|             44430 | ENSG00000282333   | <NA>          | 2015-06-01 18:57:05    | HSCHR7_2_CTG1 | False              |                 44430 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000273644                  | False                    |
+|             44431 | ENSG00000232325   | <NA>          | 2009-05-19 09:47:17    | 7             | True               |                 44431 | IS_REPRESENTATIVE      | True                           | ENSG00000232325                  | True                     |
+|             44431 | ENSG00000281993   | <NA>          | 2015-06-01 18:57:05    | HSCHR7_1_CTG1 | False              |                 44431 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000232325                  | False                    |
+|             44431 | ENSG00000282645   | <NA>          | 2015-06-01 18:57:05    | HSCHR7_2_CTG1 | False              |                 44431 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000232325                  | False                    |
+|             44431 | ENSG00000288372   | <NA>          | 2019-06-15 05:41:31    | HG1309_PATCH  | False              |                 44431 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000232325                  | False                    |
+|             44432 | ENSG00000242611   | <NA>          | 2009-08-05 14:27:16    | 7             | True               |                 44432 | IS_REPRESENTATIVE      | True                           | ENSG00000242611                  | True                     |
+|             44432 | ENSG00000282155   | <NA>          | 2015-06-01 18:57:05    | HSCHR7_1_CTG1 | False              |                 44432 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000242611                  | False                    |
+|             44432 | ENSG00000282557   | <NA>          | 2015-06-01 18:57:05    | HSCHR7_2_CTG1 | False              |                 44432 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000242611                  | False                    |
+|             44432 | ENSG00000288288   | <NA>          | 2019-06-15 05:41:31    | HG1309_PATCH  | False              |                 44432 | AUTOMATICALLY_ASSIGNED | False                          | ENSG00000242611                  | False                    |
 
 
 
@@ -85,7 +85,7 @@ Contains 19,384 rows.
 ### updates
 
 This dataset updates ensembl genes to current, representative ensembl genes. We refer to it as the 'omni-updater'. When ingesting external datasets that use Ensembl gene IDs, we recommend joining with this table. Current, representative genes map to themselves.
-Contains 80,258 rows.
+Contains 79,221 rows.
 
 | input_ensembl_gene_id   | ensembl_gene_id   | input_current   | input_representative   |   input_maps_to_n_genes |   n_inputs_map_to_gene |
 |:------------------------|:------------------|:----------------|:-----------------------|------------------------:|-----------------------:|
@@ -127,7 +127,7 @@ Contains 505,967 rows.
 ### xref_ncbigene
 
 This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes.
-Contains 26,952 rows.
+Contains 26,686 rows.
 
 | ensembl_representative_gene_id   |   ncbigene_id | gene_symbol   | ncbigene_symbol   |
 |:---------------------------------|--------------:|:--------------|:------------------|
