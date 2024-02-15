@@ -7,10 +7,10 @@
 - database: `rattus_norvegicus_core_111_72`
 - release: 111
 - assembly: 72
-- export date: 2024-02-15T00:31:24.314577
-- source commit: `eb7c779369d215e08761e4b509eb8c32655aefc5
+- export date: 2024-02-15T16:26:36.911146
+- source commit: `d2ecc10a2484d783db01f9760ce669e7be8416eb
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7909230546>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7919013544>
 
 
 
@@ -43,10 +43,20 @@ Contains 30,562 rows.
 ### alt_alleles
 
 This is an intermediate table that groups genes if they are alternate alleles of each other. A representative gene is selected from each group.
-Contains 0 rows.
+Contains 30,562 rows.
 
-| ensembl_gene_id   | alt_allele_group_id   | alt_allele_is_representative   | primary_assembly   | seq_region   | alt_allele_attrib   | ensembl_created_date   | ensembl_representative_gene_id   | is_representative_gene   | representative_gene_method   |
-|-------------------|-----------------------|--------------------------------|--------------------|--------------|---------------------|------------------------|----------------------------------|--------------------------|------------------------------|
+| rs_allele_group   | ensembl_gene_id    | gene_symbol   | ensembl_created_date   | seq_region   | primary_assembly   | alt_allele_group_id   | alt_allele_attrib   | alt_allele_is_representative   | ensembl_representative_gene_id   | is_representative_gene   |
+|:------------------|:-------------------|:--------------|:-----------------------|:-------------|:-------------------|:----------------------|:--------------------|:-------------------------------|:---------------------------------|:-------------------------|
+| 1700031L13Rik     | ENSRNOG00000062941 | 1700031L13Rik | 2021-02-26 12:35:27    | 14           | True               |                       |                     | False                          | ENSRNOG00000062941               | True                     |
+| 1700066B19Rik     | ENSRNOG00000066011 | 1700066B19Rik | 2021-02-26 12:35:27    | 18           | True               |                       |                     | False                          | ENSRNOG00000066011               | True                     |
+| 2210017I01Rik     | ENSRNOG00000065845 | 2210017I01Rik | 2021-02-26 12:35:27    | 2            | True               |                       |                     | False                          | ENSRNOG00000065845               | True                     |
+| 3110082J24Rik     | ENSRNOG00000046262 | 3110082J24Rik | 2012-11-09 06:35:19    | 6            | True               |                       |                     | False                          | ENSRNOG00000046262               | True                     |
+| 4930404H24Rik     | ENSRNOG00000063306 | 4930404H24Rik | 2021-02-26 12:35:27    | 3            | True               |                       |                     | False                          | ENSRNOG00000063306               | True                     |
+| 4930455H04Rik     | ENSRNOG00000070759 | 4930455H04Rik | 2021-02-26 12:35:27    | 2            | True               |                       |                     | False                          | ENSRNOG00000070759               | True                     |
+| 4933400A11Rik     | ENSRNOG00000003688 | 4933400A11Rik | 2009-07-29 15:36:02    | X            | True               |                       |                     | False                          | ENSRNOG00000003688               | True                     |
+| 4933403O08Rik     | ENSRNOG00000042394 | 4933403O08Rik | 2009-07-29 15:36:02    | X            | True               |                       |                     | False                          | ENSRNOG00000042394               | True                     |
+| 6330411D24Rik     | ENSRNOG00000065736 | 6330411D24Rik | 2021-02-26 12:35:27    | 5            | True               |                       |                     | False                          | ENSRNOG00000065736               | True                     |
+| A030014E15Rik     | ENSRNOG00000066070 | A030014E15Rik | 2021-02-26 12:35:27    | 9            | True               |                       |                     | False                          | ENSRNOG00000066070               | True                     |
 
 
 
@@ -75,7 +85,7 @@ Contains 34,351 rows.
 ### updates
 
 This dataset updates ensembl genes to current, representative ensembl genes. We refer to it as the 'omni-updater'. When ingesting external datasets that use Ensembl gene IDs, we recommend joining with this table. Current, representative genes map to themselves.
-Contains 59,197 rows.
+Contains 59,063 rows.
 
 | input_ensembl_gene_id   | ensembl_gene_id    | input_current   | input_representative   |   input_maps_to_n_genes |   n_inputs_map_to_gene |
 |:------------------------|:-------------------|:----------------|:-----------------------|------------------------:|-----------------------:|
@@ -117,7 +127,7 @@ Contains 236,283 rows.
 ### xref_ncbigene
 
 This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes.
-Contains 22,824 rows.
+Contains 22,719 rows.
 
 | ensembl_representative_gene_id   |   ncbigene_id | gene_symbol   | ncbigene_symbol   |
 |:---------------------------------|--------------:|:--------------|:------------------|
