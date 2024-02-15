@@ -44,15 +44,17 @@ class Ensembl_Gene_Queries:
     def connection_url(self) -> str:
         """
         Ensembl public MySQL Servers information at
-        https://uswest.ensembl.org/info/data/mysql.html
+        <https://uswest.ensembl.org/info/data/mysql.html>.
+        NOTE: Common Table Expression (CTEs) are not supported in MySQL < 8.0 or MariaDB < 10.2.
+        Window functions are also not available.
         """
         import sqlalchemy
 
         url = sqlalchemy.engine.url.URL.create(
             drivername="mysql+mysqlconnector",
             username="anonymous",
-            host="ensembldb.ensembl.org",  # From Ensembl 48 onwards only
-            # host="useastdb.ensembl.org",  # Current and previous Ensembl version only
+            host="ensembldb.ensembl.org",  # From Ensembl 48 onwards only, MySQL 5.6.33
+            # host="useastdb.ensembl.org",  # Current and previous Ensembl version only, MariaDB 10.0.30
             port=3306,
             database=self.database,
         )
@@ -96,7 +98,9 @@ class Ensembl_Gene_Queries:
         gene_df = gene_df.join(desc_df)
         # add ensembl_representative_gene_id column
         gene_repr_df = gene_df.merge(
-            self.alt_allele_df[["ensembl_gene_id", "ensembl_representative_gene_id"]],
+            self.representative_gene_df[
+                ["ensembl_gene_id", "ensembl_representative_gene_id"]
+            ],
             how="left",
         )
         gene_repr_df.ensembl_representative_gene_id = (
@@ -130,36 +134,26 @@ class Ensembl_Gene_Queries:
         assert bad_chromosome_df.empty
 
     @cached_property
-    def alt_allele_df(self) -> pd.DataFrame:
-        alt_allele_df = self.run_query("gene_alt_alleles")
-        expected_cols = [
-            *alt_allele_df.columns,
-            "ensembl_representative_gene_id",
-            "is_representative_gene",
-            "representative_gene_method",
-        ]
-        if not alt_allele_df.empty:
-            alt_allele_df = alt_allele_df.groupby("alt_allele_group_id").apply(
-                self._alt_allele_add_representative
-            )
-        else:
-            # Force expected output columns, since groupby-apply does not add columns
-            # from _alt_allele_add_representative when alt_allele_df is empty.
-            alt_allele_df = alt_allele_df.reindex(columns=expected_cols)
-        # ensembl_gene_id can be duplicated due to multiple alt_allele_attrib values
-        alt_allele_df = alt_allele_df.drop_duplicates("ensembl_gene_id", keep="first")
-        self._check_alt_allele_df(alt_allele_df)
-        return alt_allele_df
+    def representative_gene_df(self) -> pd.DataFrame:
+        df = (
+            self.run_query("gene_alt_alleles")
+            .groupby("rs_allele_group", group_keys=False)
+            .apply(self._alt_allele_add_representative)
+            # ensembl_gene_id can be duplicated due to multiple alt_allele_attrib values
+            .drop_duplicates("ensembl_gene_id", keep="first")
+        )
+        self._check_representative_gene_df(df)
+        return df
 
     @staticmethod
-    def _check_alt_allele_df(alt_allele_df: pd.DataFrame) -> None:
+    def _check_representative_gene_df(alt_allele_df: pd.DataFrame) -> None:
         dup_df = alt_allele_df[alt_allele_df.ensembl_gene_id.duplicated(keep=False)]
         assert dup_df.empty
 
     @staticmethod
-    def _alt_allele_get_representative(df: pd.DataFrame) -> "tuple[str, str]":
+    def _alt_allele_get_representative(df: pd.DataFrame) -> str:
         """
-        For a subset of the alt_allele_df corresponding to a single `alt_allele_group_id`,
+        For a subset of the alt_allele_df corresponding to a single `rs_allele_group`,
         return a (ensembl_representative_gene_id, representative_gene_method) tuple,
         where `ensembl_representative_gene_id` is the selected representative gene from this group
         and `representative_gene_method` is the method by which it was selected.
@@ -169,43 +163,28 @@ class Ensembl_Gene_Queries:
         2. primary_assembly: a single gene is on the primary assembly.
         3. first_added: the gene first added to the Ensembl database.
         """
-        representatives = list(
-            df.loc[df.alt_allele_is_representative.astype("bool"), "ensembl_gene_id"]
-        )
-        if len(representatives) == 1:
-            return representatives[0], "alt_allele_is_representative"
-        if len(representatives) > 1:
-            raise ValueError(
-                "expected at most 1 IS_REPRESENTATIVE gene per alt_allele_group"
-            )
-        representatives = list(
-            df.loc[df.primary_assembly.astype("bool"), "ensembl_gene_id"]
-        )
-        if len(representatives) == 1:
-            return representatives[0], "primary_assembly"
-        if len(representatives) > 1:
-            raise ValueError(
-                "expected at most 1 primary assembly gene per alt_allele_group"
-            )
-        return (
-            df.sort_values(
-                ["ensembl_created_date", "ensembl_gene_id"]
-            ).ensembl_gene_id.iloc[0],
-            "first_added",
-        )
+        representative_gene = df.sort_values(
+            [
+                "alt_allele_is_representative",
+                "primary_assembly",
+                "ensembl_created_date",
+                "ensembl_gene_id",
+            ],
+            ascending=[False, False, True, True],
+        ).ensembl_gene_id.iloc[0]
+        assert isinstance(representative_gene, str)
+        return representative_gene
 
-    @staticmethod
-    def _alt_allele_add_representative(df: pd.DataFrame) -> pd.DataFrame:
+    @classmethod
+    def _alt_allele_add_representative(cls, df: pd.DataFrame) -> pd.DataFrame:
         """
-        Apply to alt_allele_df grouped by `alt_allele_group_id` to add columns:
+        Apply to alt_allele_df grouped by `rs_allele_group` to add columns:
         `ensembl_representative_gene_id`, `is_representative_gene`, `representative_gene_method`.
         """
-        representative, method = Ensembl_Gene_Queries._alt_allele_get_representative(df)
-        df["ensembl_representative_gene_id"] = representative
+        df["ensembl_representative_gene_id"] = cls._alt_allele_get_representative(df)
         df["is_representative_gene"] = (
             df.ensembl_gene_id == df.ensembl_representative_gene_id
         )
-        df["representative_gene_method"] = method
         # the ordering of alt_allele_df should always place the representative gene first.
         # at some point we might be able to move all logic to SQL
         assert df["is_representative_gene"].iloc[0]
@@ -481,7 +460,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
         ),
         DatasetExport(
             name="alt_alleles",
-            query_fxn="alt_allele_df",
+            query_fxn="representative_gene_df",
             description=(
                 "This is an intermediate table that groups genes if they are alternate alleles of each other. "
                 "A representative gene is selected from each group."
