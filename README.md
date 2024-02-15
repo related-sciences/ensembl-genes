@@ -7,10 +7,10 @@
 - database: `mus_musculus_core_111_39`
 - release: 111
 - assembly: 39
-- export date: 2024-02-15T00:32:16.496732
-- source commit: `eb7c779369d215e08761e4b509eb8c32655aefc5
+- export date: 2024-02-15T16:30:27.622796
+- source commit: `d2ecc10a2484d783db01f9760ce669e7be8416eb
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7909230546>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/7919013544>
 
 
 
@@ -43,10 +43,20 @@ Contains 57,180 rows.
 ### alt_alleles
 
 This is an intermediate table that groups genes if they are alternate alleles of each other. A representative gene is selected from each group.
-Contains 0 rows.
+Contains 57,180 rows.
 
-| ensembl_gene_id   | alt_allele_group_id   | alt_allele_is_representative   | primary_assembly   | seq_region   | alt_allele_attrib   | ensembl_created_date   | ensembl_representative_gene_id   | is_representative_gene   | representative_gene_method   |
-|-------------------|-----------------------|--------------------------------|--------------------|--------------|---------------------|------------------------|----------------------------------|--------------------------|------------------------------|
+| rs_allele_group   | ensembl_gene_id    | gene_symbol   | ensembl_created_date   |   seq_region | primary_assembly   | alt_allele_group_id   | alt_allele_attrib   | alt_allele_is_representative   | ensembl_representative_gene_id   | is_representative_gene   |
+|:------------------|:-------------------|:--------------|:-----------------------|-------------:|:-------------------|:----------------------|:--------------------|:-------------------------------|:---------------------------------|:-------------------------|
+| 0610005C13Rik     | ENSMUSG00000109644 | 0610005C13Rik | 2007-12-11 14:58:31    |            7 | True               |                       |                     | False                          | ENSMUSG00000109644               | True                     |
+| 0610006L08Rik     | ENSMUSG00000108652 | 0610006L08Rik | 2015-07-06 11:47:18    |            7 | True               |                       |                     | False                          | ENSMUSG00000108652               | True                     |
+| 0610009E02Rik     | ENSMUSG00000086714 | 0610009E02Rik | 2005-06-29 11:35:32    |            2 | True               |                       |                     | False                          | ENSMUSG00000086714               | True                     |
+| 0610009L18Rik     | ENSMUSG00000043644 | 0610009L18Rik | 2004-08-20 10:27:42    |           11 | True               |                       |                     | False                          | ENSMUSG00000043644               | True                     |
+| 0610010K14Rik     | ENSMUSG00000020831 | 0610010K14Rik | 2003-12-09 12:39:50    |           11 | True               |                       |                     | False                          | ENSMUSG00000020831               | True                     |
+| 0610012D04Rik     | ENSMUSG00000089755 | 0610012D04Rik | 2007-09-11 21:59:10    |           17 | True               |                       |                     | False                          | ENSMUSG00000089755               | True                     |
+| 0610025J13Rik     | ENSMUSG00000046683 | 0610025J13Rik | 2005-02-14 17:10:21    |            4 | True               |                       |                     | False                          | ENSMUSG00000046683               | True                     |
+| 0610030E20Rik     | ENSMUSG00000058706 | 0610030E20Rik | 2015-06-08 10:16:34    |            6 | True               |                       |                     | False                          | ENSMUSG00000058706               | True                     |
+| 0610031O16Rik     | ENSMUSG00000099146 | 0610031O16Rik | 2013-07-02 16:06:07    |            3 | True               |                       |                     | False                          | ENSMUSG00000099146               | True                     |
+| 0610033M10Rik     | ENSMUSG00000108236 | 0610033M10Rik | 2015-05-18 15:01:09    |            6 | True               |                       |                     | False                          | ENSMUSG00000108236               | True                     |
 
 
 
@@ -117,7 +127,7 @@ Contains 311,968 rows.
 ### xref_ncbigene
 
 This dataset contains cross-references (xrefs) from Ensembl genes to NCBI (Entrez) genes.
-Contains 27,421 rows.
+Contains 27,404 rows.
 
 | ensembl_representative_gene_id   |   ncbigene_id | gene_symbol   | ncbigene_symbol   |
 |:---------------------------------|--------------:|:--------------|:------------------|
