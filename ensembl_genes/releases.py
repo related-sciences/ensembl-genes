@@ -3,7 +3,11 @@ from functools import lru_cache
 
 @lru_cache
 def get_latest_ensembl_release() -> str:
-    """Return the latest Ensembl release as provided by bioversions."""
+    """
+    Return the latest Ensembl release as provided by bioversions.
+    Bioversions might lag behind the latest ensembl release due to errors,
+    such as <https://github.com/biopragmatics/bioversions/issues/33>.
+    """
     import requests
 
     url = "https://github.com/biopragmatics/bioversions/raw/main/src/bioversions/resources/versions.json"
