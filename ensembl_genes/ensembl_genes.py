@@ -296,11 +296,19 @@ class Ensembl_Gene_Queries:
             .drop_duplicates()
             .sort_values(["input_ensembl_gene_id", "ensembl_gene_id"])
         )
-        assert update_df[
+        duplicated_updates = update_df[
             update_df[["input_ensembl_gene_id", "ensembl_gene_id"]].duplicated(
                 keep=False
             )
-        ].empty
+        ]
+        if not duplicated_updates.empty:
+            logging.warning(
+                "Duplicated updates via union of update_alt_df and update_old_df:\n"
+                f"{duplicated_updates.to_string(index=False)}"
+            )
+            update_df.drop_duplicates(
+                subset=["input_ensembl_gene_id", "ensembl_gene_id"], inplace=True
+            )
         update_df["input_maps_to_n_genes"] = update_df.input_ensembl_gene_id.map(
             update_df.input_ensembl_gene_id.value_counts()
         )
