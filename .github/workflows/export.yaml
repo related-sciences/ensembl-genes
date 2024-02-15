@@ -32,6 +32,10 @@ jobs:
       id: params
       shell: bash
       run: |
+        DATE_ISO=$(date --utc --iso)
+        echo "Setting parameter date_iso=$DATE_ISO"
+        echo "date_iso=$DATE_ISO" >> $GITHUB_OUTPUT
+
         ENSEMBL_RELEASE=${{ github.event.inputs.release || 'latest' }}
         ENSEMBL_RELEASE=$(poetry run ensembl_genes ensembl_release --release="$ENSEMBL_RELEASE")
         echo "Setting parameter release=$ENSEMBL_RELEASE"
@@ -81,3 +85,9 @@ jobs:
         # Won't actually enable jekyll because we're not using GitHub Pages.
         # https://github.com/peaceiris/actions-gh-pages/issues/660
         enable_jekyll: true
+        full_commit_message: |
+          export ${{ steps.params.outputs.database }} on ${{ steps.params.outputs.date_iso }}
+          
+          code version ${{ github.sha }}
+          built by <${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}>
+        allow_empty_commit: true
