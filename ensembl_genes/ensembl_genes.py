@@ -514,6 +514,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
     ipynb_exports = [
         "ensembl_genes_output.ipynb",
         "ensembl_genes_eda.ipynb",
+        "ensembl_database_tables.ipynb",
     ]
 
     def __init__(self, species: str | Species, release: str):
