@@ -32,4 +32,4 @@ repos:
     rev: '2.0.1'  # pre-commit autoupdate does not work properly
     hooks:
       - id: poetry-check
-      - id: poetry-lock
+
