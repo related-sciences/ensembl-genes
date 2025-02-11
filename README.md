@@ -7,10 +7,10 @@
 - database: `rattus_norvegicus_core_113_72`
 - release: 113
 - assembly: 72
-- export date: 2025-01-06T21:06:44.626508
-- source commit: `d2ecc10a2484d783db01f9760ce669e7be8416eb
+- export date: 2025-02-11T16:54:29.037370
+- source commit: `4742a3fec2d0de6fd0d43b370697fe972b9ec5ee
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/12640243149>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/13268065998>
 
 
 
