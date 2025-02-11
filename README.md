@@ -7,10 +7,10 @@
 - database: `mus_musculus_core_113_39`
 - release: 113
 - assembly: 39
-- export date: 2025-01-06T21:09:39.993315
-- source commit: `d2ecc10a2484d783db01f9760ce669e7be8416eb
+- export date: 2025-02-11T16:57:33.841118
+- source commit: `4742a3fec2d0de6fd0d43b370697fe972b9ec5ee
 `
-- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/12640243149>
+- created in action: <https://github.com/related-sciences/ensembl-genes/actions/runs/13268065998>
 
 
 
