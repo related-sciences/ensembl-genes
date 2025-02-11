@@ -12,4 +12,4 @@ runs:
       run: pip install poetry
     - name: Install dependencies
       shell: bash
-      run: poetry install --ansi
+      run: poetry install --ansi --all-extras
