@@ -1,40 +1,50 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry]
+[project]
 name = "ensembl_genes"
 version = "0.0.0"
 description = "Extract the Ensembl gene catalog to simple tables."
-authors = ["Related Sciences Data Team"]
+authors = [
+    {name = "Related Sciences Data Team"}
+]
 readme = "README.md"
-repository = "https://github.com/related-sciences/ensembl-genes"
-license = "Apache-2.0"
-include = ["ensembl_genes/queries/*.sql", "ensembl_genes/notebooks/*.ipynb"]
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+dependencies = [
+    "pyarrow>=7.0.0",
+    "typer[all]>=0.9.0",
+    "jupyter>=1.0.0",
+    "mysql-connector-python>=8.0.26",
+    "nbconvert>=6.2.0",
+    "notebook>=6.4.4",
+    "openpyxl>=3.0.9",
+    "pandas>=1.3.3",
+    "papermill>=2.3.3",
+    "requests>=2.26.0",
+    "sqlalchemy>=1.4.25",
+    "tabulate>=0.8.9",
+    "bioregistry>=0.9.64",
+]
 
-[tool.poetry.scripts]
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=2.15.0",
+    "pytest>=6.2.5",
+]
+
+[project.urls]
+repository = "https://github.com/related-sciences/ensembl-genes"
+
+[project.scripts]
 ensembl_genes = "ensembl_genes.commands:Commands.command"
 
-# https://python-poetry.org/docs/versions/
-[tool.poetry.dependencies]
-python = "^3.10"
-pyarrow = "^7.0.0"
-typer = {extras = ["all"], version = "^0.9.0"}
-jupyter = "^1.0.0"
-mysql-connector-python = "^8.0.26"
-nbconvert = "^6.2.0"
-notebook = "^6.4.4"
-openpyxl = "^3.0.9"
-pandas = "^1.3.3"
-papermill = "^2.3.3"
-requests = "^2.26.0"
-sqlalchemy = "^1.4.25"
-tabulate = "^0.8.9"
-bioregistry = "^0.9.64"
-
-[tool.poetry.dev-dependencies]
-pre-commit = "^2.15.0"
-pytest = "^6.2.5"
+[tool.setuptools.package-data]
+ensembl_genes = [
+    "queries/*.sql",
+    "notebooks/*.ipynb"
+]
 
 [tool.ruff]
 target-version = "py310"
