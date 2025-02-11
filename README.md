@@ -47,7 +47,7 @@ and runs an export if none already exists for that each species-specific databas
 
 ```shell
 # Install the environment
-poetry install --no-root
+poetry install --no-root --all-extras
 
 # Update the lock file
 poetry update
