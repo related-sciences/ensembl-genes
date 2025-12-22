@@ -63,10 +63,10 @@ pytest
 
 # Set up the git pre-commit hooks.
 # `git commit` will now trigger automatic checks including linting.
-pre-commit install
+prek install
 
 # Run all pre-commit checks (CI will also run this).
-pre-commit run --all
+prek run --all-files
 ```
 
 ## License

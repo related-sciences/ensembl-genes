@@ -30,7 +30,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pre-commit>=4.1.0",
+    "prek>=0.2.23",
     "pytest>=6.2.5",
 ]
 
