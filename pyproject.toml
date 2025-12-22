@@ -60,7 +60,11 @@ select = [
     "C90",  # mccabe
     "E",  # pycodestyle errors
     "F",  # pyflakes
+    "FURB",  # refurbish and modernize
     "I",  # isort
+    "PT",  # flake8-pytest-style
+    "RUF",  # ruff
+    "SIM",  # simplify
     "UP",  # pyupgrade
     "W",  # pycode warnings
 ]

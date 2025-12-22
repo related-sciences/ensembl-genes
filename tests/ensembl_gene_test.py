@@ -8,7 +8,7 @@ def test_ensembl_gene_queries() -> None:
 
 
 @pytest.mark.parametrize(
-    "raw_description,expect_description,expect_src,expect_id",
+    ("raw_description", "expect_description", "expect_src", "expect_id"),
     [
         (
             "G protein subunit gamma 5 pseudogene 3 [Source:HGNC Symbol;Acc:HGNC:33552]",

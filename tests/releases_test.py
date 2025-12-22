@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from ensembl_genes.releases import check_ensembl_release, get_latest_ensembl_release
@@ -13,6 +15,8 @@ def test_check_ensembl_release() -> None:
     assert int(check_ensembl_release("latest")) >= 104
     with pytest.raises(
         ValueError,
-        match="release should be convertible to an int, like '104'. Received 'v104'",
+        match=re.escape(
+            "release should be convertible to an int, like '104'. Received 'v104'"
+        ),
     ):
         check_ensembl_release("v104")

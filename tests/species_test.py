@@ -13,7 +13,7 @@ def test_get_species() -> None:
 
 
 @pytest.mark.parametrize(
-    "gene, category",
+    ("gene", "category"),
     [
         # from ENSG00000112493
         (Gene("6", 33_221_298, 33_235_989), "MHC"),

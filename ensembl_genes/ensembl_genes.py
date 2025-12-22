@@ -23,7 +23,7 @@ class Ensembl_Gene_Queries:
     Regex to separate source information from the gene description text.
     https://regex101.com/r/wbW1Qc/1
     """
-    _column_dtypes: dict[str, str] = {
+    _column_dtypes: ClassVar[dict[str, str]] = {
         "alt_allele_is_representative": "bool",
         "primary_assembly": "bool",
     }
@@ -464,7 +464,7 @@ class DatasetExport:
 
 
 class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
-    exports: list[DatasetExport] = [
+    exports: ClassVar[list[DatasetExport]] = [
         DatasetExport(
             name="genes",
             query_fxn="gene_df",
@@ -528,7 +528,7 @@ class Ensembl_Gene_Catalog_Writer(Ensembl_Gene_Queries):
             ),
         ),
     ]
-    ipynb_exports = [
+    ipynb_exports: ClassVar[list[str]] = [
         "ensembl_genes_output.ipynb",
         "ensembl_genes_eda.ipynb",
         "ensembl_database_tables.ipynb",
