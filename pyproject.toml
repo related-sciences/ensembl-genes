@@ -11,7 +11,7 @@ authors = [
 ]
 readme = "README.md"
 license = {text = "Apache-2.0"}
-requires-python = "==3.10.*"
+requires-python = "==3.14.*"
 dependencies = [
     "pyarrow>=7.0.0",
     "typer[all]>=0.9.0",
@@ -47,7 +47,7 @@ ensembl_genes = [
 ]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py314"
 line-length = 88
 
 [tool.ruff.lint]
@@ -66,7 +66,7 @@ select = [
 ]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.14"
 strict = true
 pretty = true
 show_error_context = true
