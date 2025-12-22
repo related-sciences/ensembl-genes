@@ -37,11 +37,11 @@ jobs:
         echo "date_iso=$DATE_ISO" >> $GITHUB_OUTPUT
 
         ENSEMBL_RELEASE=${{ github.event.inputs.release || 'latest' }}
-        ENSEMBL_RELEASE=$(poetry run ensembl_genes ensembl_release --release="$ENSEMBL_RELEASE")
+        ENSEMBL_RELEASE=$(uv run ensembl_genes ensembl_release --release="$ENSEMBL_RELEASE")
         echo "Setting parameter release=$ENSEMBL_RELEASE"
         echo "release=$ENSEMBL_RELEASE" >> $GITHUB_OUTPUT
 
-        ENSEMBL_DATABASE=$(poetry run ensembl_genes ensembl_database --species="${{ matrix.species }}" --release="$ENSEMBL_RELEASE")
+        ENSEMBL_DATABASE=$(uv run ensembl_genes ensembl_database --species="${{ matrix.species }}" --release="$ENSEMBL_RELEASE")
         echo "Setting parameter database=$ENSEMBL_DATABASE"
         echo "database=$ENSEMBL_DATABASE" >> $GITHUB_OUTPUT
         # output_path doubles as a hierarchical branch name
@@ -67,7 +67,7 @@ jobs:
     - name: Extract tables
       id: extract
       if: steps.params.outputs.export == 'true'
-      run: poetry run ensembl_genes all --species="${{ matrix.species }}" --release=${{ steps.params.outputs.release }}
+      run: uv run ensembl_genes all --species="${{ matrix.species }}" --release=${{ steps.params.outputs.release }}
     - name: Output artifact
       # upload outputs to artifact only when the extraction fails
       if: always() && steps.extract.outcome == 'failure'

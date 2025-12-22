@@ -61,7 +61,7 @@ class Commands:
     @staticmethod
     def command() -> None:
         """
-        Run like `poetry run ensembl_genes`
+        Run like `uv run ensembl_genes`
         """
         logging.basicConfig()
         logging.getLogger().setLevel(logging.INFO)

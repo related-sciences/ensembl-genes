@@ -16,4 +16,4 @@ jobs:
     - name: Run pre-commit
       uses: pre-commit/action@v3.0.1
     - name: Test with pytest
-      run: poetry run pytest --color=yes
+      run: uv run pytest --color=yes

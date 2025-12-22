@@ -47,16 +47,16 @@ and runs an export if none already exists for that each species-specific databas
 
 ```shell
 # Install the environment
-poetry install --no-root --all-extras
+uv sync
 
 # Update the lock file
-poetry update
+uv lock --upgrade 
 
 # Export datasets to output (change 104 to desired release)
-poetry run ensembl_genes datasets --species=human --release=104
+uv run ensembl_genes datasets --species=human --release=104
 
 # Export notebooks to output (change 104 to desired release)
-poetry run ensembl_genes notebooks --species=human --release=104
+uv run ensembl_genes notebooks --species=human --release=104
 
 # Run tests
 pytest

@@ -7,9 +7,9 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - name: Install poetry
+    - name: Setup uv
       shell: bash
-      run: pip install poetry
+      uses: astral-sh/setup-uv@v7
     - name: Install dependencies
       shell: bash
-      run: poetry install --ansi --all-extras
+      run: uv sync
