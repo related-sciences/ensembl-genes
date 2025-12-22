@@ -428,6 +428,15 @@ class Ensembl_Gene_Queries:
             xref_go_df.duplicated(subset=["ensembl_gene_id", "go_id"], keep=False)
         ]
         assert dup_df.empty
+        # warn if any GO terms have missing labels
+        # https://github.com/related-sciences/ensembl-genes/issues/28
+        missing_label_df = xref_go_df[xref_go_df.go_label.isna()]
+        if not missing_label_df.empty:
+            go_ids_missing = missing_label_df.go_id.unique()
+            logging.warning(
+                f"Found {len(missing_label_df):,} GO annotations with missing go_label "
+                f"for {len(go_ids_missing):,} GO IDs: {', '.join(sorted(go_ids_missing)[:5])}..."
+            )
         if self.species == human:
             # spot check a single GO annotation for TYK2 and protein tyrosine kinase activity
             # Refs internal Related Sciences pull request 322#issuecomment-756789203.
