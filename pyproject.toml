@@ -48,10 +48,12 @@ ensembl_genes = [
 
 [tool.ruff]
 target-version = "py310"
-ignore = [
-    "E501",  # line-too-long (black should handle)
-]
 line-length = 88
+
+[tool.ruff.lint]
+ignore = [
+    "E501",  # line-too-long
+]
 select = [
     "B",  # flake8-bugbear
     "C",  # flake8-comprehensions
