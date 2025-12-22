@@ -8,7 +8,6 @@ runs:
       with:
         python-version: '3.10'
     - name: Setup uv
-      shell: bash
       uses: astral-sh/setup-uv@v7
     - name: Install dependencies
       shell: bash
